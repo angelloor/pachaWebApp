@@ -1,9 +1,9 @@
 import React from 'react';
-import '../assets/styles/Home.scss';
+import '../assets/styles/Background.scss';
 
 const NotFount = () => (
   <>
-    <h1>No encontrado</h1>
+    <h1>Página no encontrada</h1>
   </>
 );
 

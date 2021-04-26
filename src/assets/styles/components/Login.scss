@@ -1,0 +1,81 @@
+.containerLogin {
+	width: 300px;
+}
+
+.containerLogin > .containerLogo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 20px;
+}
+
+.containerLogin > .containerLogo .imgLogo {
+	width: 150px;
+	height: 150px;
+}
+
+.containerLogin > .containerLogo .textLogo {
+	margin-top: 10px;
+	font-size: 25px;
+}
+
+.containerLogin > .containerLogo .barLogo {
+	width: 50%;
+	height: 5px;
+	margin-top: 10px;
+	background-color: white;
+	border-radius: 5px;
+}
+
+.containerLogin > .containerInput {
+	display: flex;
+	flex-direction: column;
+}
+
+.containerLogin > .containerInput > .containerInputBox {
+	width: 100%;
+	height: 50px;
+	background-color: #505467;
+	border: solid 1px white;
+	border-radius: 15px;
+	margin: 10px 0;
+}
+
+.containerLogin > .containerInput > .containerInputBox > .input {
+	outline: none;
+	border-radius: 0;
+	height: 50px;
+	background-color: rgba(80, 84, 103, 0.2);
+	border: 0;
+	color: white;
+	margin-left: 20px;
+}
+
+.containerLogin > .containerInput > .containerInputBox > .input::placeholder {
+	color: white;
+}
+
+.containerLogin > .containerInput > .containerInputBtn > .btnSubmit {
+	width: 50%;
+	outline: none;
+	border-radius: 0;
+	background-color: white;
+	color: #0fae4b;
+	font-size: 20px;
+	padding: 10px;
+	border-radius: 15px;
+}
+
+.containerLogin > .containerInput > .containerInputBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 0;
+}
+
+.link {
+	color: white;
+	text-decoration: none;
+	align-self: center;
+}

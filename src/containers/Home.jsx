@@ -1,21 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import '../assets/styles/Home.scss';
-import Componente from '../components/Componente';
+import '../assets/styles/BackgroundImage.scss';
+import '../assets/styles/components/Home.scss';
+import Layout from '../components/Layout';
 
-const Home = ({ autor }) => {
+const Home = (props) => {
   return (
-    <>
-      <h1>Hola Mundo desde ReactJS</h1>
-      <Componente nombre={autor.nombre} />
-    </>
+    <div className="containerHome">
+      <Layout>
+        <h1>Inicio</h1>
+      </Layout>
+    </div>
   )
 }
-
-Home.propTypes = {
-  autor: PropTypes.object
-};
 
 const mapStateToProps = state => {
   return {
