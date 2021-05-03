@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/styles/components/Home.scss';
+import '../assets/styles/components/Home.scss';
 
 const InputSearch = props => {
     return (

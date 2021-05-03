@@ -1,21 +1,28 @@
 import React from 'react';
+import '../../assets/styles/components/Users.scss';
 
 const ItemUser = props => {
+
+    const event = () => {
+        console.log('open Modal')
+    }
+
     return (
         <div className="containerItem">
-            <div>
-                <h4>Angel Loor</h4>
+            <div className="name">
+                <p>Angel Loor</p>
             </div>
-            <div>
-                <h4>Nivel 10</h4>
+            <div className="level">
+                <p>Nivel 10</p>
             </div>
-            <div>
-                <h4>600</h4>
+            <div className="coint">
+                <p>600</p>
             </div>
-            <div>
-                <input type="submit" />
+            <div className="containerBtn">
+                <a className="btn" onClick={event}>Ver información</a>
+                <a className="btn" onClick={event}>Ver retos</a>
+                <a className="btn" onClick={event}>Ver compras</a>
             </div>
-
         </div>
     );
 };

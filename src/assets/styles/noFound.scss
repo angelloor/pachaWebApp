@@ -1,0 +1,10 @@
+body > #app {
+	height: 100vh;
+}
+
+body > #app > .containerNofount {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

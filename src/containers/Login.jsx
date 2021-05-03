@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Logo from '../assets/static/iso.png';
 import '../assets/styles/Background.scss';
 import '../assets/styles/components/Login.scss';
@@ -11,7 +10,7 @@ const Login = props => {
     }
 
     const handleSubmit = (e) => {
-        console.log('enviados')
+        props.history.push("/home");
     }
 
     return (
@@ -30,9 +29,8 @@ const Login = props => {
                         <input className="input" type="password" placeholder="Contraseña" onChange={handleChange} />
                     </div>
                     <div className="containerInputBtn">
-                        <input className="btnSubmit" type="submit" name="submit" onClick={handleSubmit} />
+                        <input className="btnSubmit" type="submit" name="submit" value="Entrar" onClick={handleSubmit} />
                     </div>
-                    <Link className="link" to="/Home">ir a home</Link>
                 </div>
             </div>
         </div>

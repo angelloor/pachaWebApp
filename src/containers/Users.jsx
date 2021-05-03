@@ -2,22 +2,60 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../assets/styles/BackgroundImage.scss';
 import '../assets/styles/components/Home.scss';
-import InputSearch from '../components/Home/InputSearch';
+import '../assets/styles/components/Users.scss';
+import InputSearch from '../components/InputSearch';
 import Layout from '../components/Layout';
+import PageLoading from '../components/PageLoading';
 import ItemUser from '../components/User/ItemUser';
 
 const Users = (props) => {
-
+    const loading = false
     return (
         <div className="containerHome">
             <Layout>
-                <div className="titleSection">
-                    <h1 className="title">Usuarios</h1>
-                </div>
-                <InputSearch />
-                <div className="containerItemUser">
-                    <ItemUser />
-                </div>
+                {(loading) ? <PageLoading /> :
+                    <>
+                        <div className="titleSection">
+                            <h1 className="title">Usuarios</h1>
+                        </div>
+                        <InputSearch />
+                        <div className="containerItemUser">
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                            <ItemUser />
+                        </div>
+                    </>}
             </Layout>
         </div>
     )

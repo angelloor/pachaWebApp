@@ -1,14 +1,15 @@
 //breackcumb
 .titleSection {
 	width: 100%;
-	padding: 10px 30px;
+	padding: 15px 30px;
+	padding-bottom: 0px;
+	padding-left: 35px;
 }
 
 .titleSection > .title {
 	color: #505467;
-	font-size: 16px;
+	font-size: 18px;
 }
-
 //imput Search
 
 .rowImputSearch {
@@ -33,4 +34,8 @@
 	border: 0;
 	color: white;
 	margin-left: 20px;
+}
+
+.rowImputSearch > .containerInputSearch > .inputSearch::placeholder {
+	color: white;
 }

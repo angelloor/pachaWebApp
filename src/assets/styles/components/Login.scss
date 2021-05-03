@@ -43,9 +43,10 @@
 }
 
 .containerLogin > .containerInput > .containerInputBox > .input {
+	width: 90%;
+	height: 50px;
 	outline: none;
 	border-radius: 0;
-	height: 50px;
 	background-color: rgba(80, 84, 103, 0.2);
 	border: 0;
 	color: white;

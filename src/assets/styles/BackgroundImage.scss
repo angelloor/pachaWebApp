@@ -13,18 +13,18 @@ html {
 		rgba(33, 33, 62, 1) 0%,
 		rgba(15, 15, 30, 1) 100%
 	);
+	overflow-x: hidden;
 }
 
 body {
 	width: 100vw;
-	height: 100vh;
 	color: white;
 }
 
 body .containerHome {
 	width: 100vw;
-	height: 100vh;
 	display: flex;
+	min-height: 100vh;
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: flex-start;

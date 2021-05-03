@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/static/logoMenu.png';
-import IconOptions from '../assets/static/options.png';
 import '../assets/styles/components/Header.scss';
 
 const Header = (props) => {
@@ -23,9 +22,7 @@ const Header = (props) => {
                     <Link className="btn" to="/Store">Tienda</Link>
                 </div>
                 <div className="containerOptions">
-                    <a className="containerImgOptions" onClick={handleOpenOptions}>
-                        <img className="imgOptions" src={IconOptions} alt="opciones" />
-                    </a>
+                    <Link className="btn" to="/">Salir</Link>
                 </div>
             </div>
         </div>
