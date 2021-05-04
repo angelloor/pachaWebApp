@@ -19,7 +19,7 @@ const ItemUser = props => {
                 <p>600</p>
             </div>
             <div className="containerBtn">
-                <a className="btn" onClick={event}>Ver información</a>
+                <a className="btn" onClick={event}>Ver</a>
                 <a className="btn" onClick={event}>Ver retos</a>
                 <a className="btn" onClick={event}>Ver compras</a>
             </div>

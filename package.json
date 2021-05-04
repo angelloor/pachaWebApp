@@ -12,9 +12,11 @@
 	"keywords": [
 		"ProyectoReact"
 	],
+	"homepage": "https://pachaappec.com/app",
 	"author": "Angel Miguel Loor Manzano (@codersgt.ec)",
 	"license": "ISC",
 	"dependencies": {
+		"bootstrap": "^4.6.0",
 		"classnames": "^2.2.6",
 		"md5": "^2.3.0",
 		"npm-check": "^5.9.2",
@@ -23,6 +25,7 @@
 		"react-dom": "^17.0.1",
 		"react-redux": "^7.2.2",
 		"react-router-dom": "^5.2.0",
+		"reactstrap": "^8.9.0",
 		"redux": "^4.0.5"
 	},
 	"devDependencies": {

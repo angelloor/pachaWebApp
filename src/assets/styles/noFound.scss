@@ -7,4 +7,10 @@ body > #app > .containerNofount {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background: rgb(33, 33, 62);
+	background: radial-gradient(
+		circle,
+		rgba(33, 33, 62, 1) 0%,
+		rgba(15, 15, 30, 1) 100%
+	);
 }

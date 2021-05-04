@@ -18,6 +18,7 @@
 .containerLogin > .containerLogo .textLogo {
 	margin-top: 10px;
 	font-size: 25px;
+	color: white;
 }
 
 .containerLogin > .containerLogo .barLogo {
@@ -31,6 +32,8 @@
 .containerLogin > .containerInput {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .containerLogin > .containerInput > .containerInputBox {
@@ -38,16 +41,16 @@
 	height: 50px;
 	background-color: #505467;
 	border: solid 1px white;
-	border-radius: 15px;
+	border-radius: 10px;
 	margin: 10px 0;
 }
 
 .containerLogin > .containerInput > .containerInputBox > .input {
 	width: 90%;
-	height: 50px;
+	height: 45px;
 	outline: none;
-	border-radius: 0;
-	background-color: rgba(80, 84, 103, 0.2);
+	font-size: 14px;
+	background-color: #505467;
 	border: 0;
 	color: white;
 	margin-left: 20px;
@@ -58,14 +61,24 @@
 }
 
 .containerLogin > .containerInput > .containerInputBtn > .btnSubmit {
-	width: 50%;
+	width: 100%;
+	border: 0;
 	outline: none;
-	border-radius: 0;
 	background-color: white;
 	color: #0fae4b;
+	font-weight: 400;
+	font-size: 14px;
 	font-size: 20px;
-	padding: 10px;
-	border-radius: 15px;
+	padding: 5px 50px;
+	border: solid 1px white;
+	border-radius: 10px;
+	transition: 1s;
+}
+
+.containerLogin > .containerInput > .containerInputBtn > .btnSubmit:hover {
+	background-color: #0fae4b;
+	color: white;
+	border: solid 1px #0fae4b;
 }
 
 .containerLogin > .containerInput > .containerInputBtn {

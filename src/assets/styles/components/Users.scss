@@ -23,16 +23,31 @@
 	padding-left: 40px;
 }
 
+.containerHome > .containerItemUser > .containerItem > .name > p {
+	color: white;
+	margin-bottom: 0px;
+}
+
 .containerHome > .containerItemUser > .containerItem > .level {
 	width: 10%;
 	display: flex;
 	justify-content: center;
 }
 
+.containerHome > .containerItemUser > .containerItem > .level > p {
+	color: white;
+	margin-bottom: 0px;
+}
+
 .containerHome > .containerItemUser > .containerItem > .coint {
 	width: 10%;
 	display: flex;
 	justify-content: center;
+}
+
+.containerHome > .containerItemUser > .containerItem > .coint > p {
+	color: white;
+	margin-bottom: 0px;
 }
 
 .containerHome > .containerItemUser > .containerItem > .containerBtn {
@@ -42,9 +57,9 @@
 }
 
 .containerHome > .containerItemUser > .containerItem > .containerBtn > .btn {
-	padding: 10px 30px;
+	padding: 5px 30px;
 	background-color: #0fae4b;
-	border-radius: 15px;
+	border-radius: 10px;
 	text-decoration: none;
 	color: white;
 	margin: 0 10px;

@@ -4,6 +4,7 @@
 	flex-direction: row;
 	align-self: center;
 	padding: 20px 0px;
+	padding-top: 0px;
 }
 
 .containerHome > .containerNews > .containerCard {
@@ -18,8 +19,17 @@
 	flex-direction: column;
 }
 
-.containerHome > .containerNews > .containerItems > .containerItem {
-	width: 90%;
+.containerHome > .containerNews > .containerItems > .containerI {
+	padding: 5px 30px;
+	padding-top: 0px;
+}
+
+.containerHome
+	> .containerNews
+	> .containerItems
+	> .containerI
+	> .containerItem {
+	width: 100%;
 	background-color: #505467;
 	align-self: center;
 	border-radius: 10px;
@@ -27,16 +37,28 @@
 	flex-direction: row;
 	padding: 10px 0px;
 	justify-content: space-evenly;
-	margin: 5px 0px;
+	margin: 10px 0px;
 }
 
-.containerHome > .containerNews > .containerItems > .containerItem > .title {
+.containerHome
+	> .containerNews
+	> .containerItems
+	> .containerI
+	> .containerItem
+	> .title {
 	width: 80%;
 	align-self: center;
 	padding-left: 20px;
+	color: white;
+	margin-bottom: 0px;
 }
 
-.containerHome > .containerNews > .containerItems > .containerItem > .btnItem {
+.containerHome
+	> .containerNews
+	> .containerItems
+	> .containerI
+	> .containerItem
+	> .btnItem {
 	width: 40px;
 	height: 40px;
 	background-color: #0fae4b;
@@ -50,6 +72,7 @@
 .containerHome
 	> .containerNews
 	> .containerItems
+	> .containerI
 	> .containerItem
 	> .btnItem
 	> .imgItem {
@@ -108,7 +131,7 @@
 	width: 50px;
 	height: 50px;
 	background-color: #0fae4b;
-	border-radius: 25px;
+	border-radius: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -136,7 +159,7 @@
 	height: 50px;
 	background-color: #505467;
 	border: solid 1px white;
-	border-radius: 15px;
+	border-radius: 10px;
 	margin: 10px 0;
 }
 
@@ -148,7 +171,7 @@
 	> .input {
 	width: 95%;
 	outline: none;
-	border-radius: 0;
+	border-radius: 10px;
 	height: 50px;
 	background-color: rgba(80, 84, 103, 0.2);
 	border: 0;

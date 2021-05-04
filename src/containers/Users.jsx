@@ -16,7 +16,8 @@ const Users = (props) => {
                 {(loading) ? <PageLoading /> :
                     <>
                         <div className="titleSection">
-                            <h1 className="title">Usuarios</h1>
+                            <p>Inicio /</p>
+                            <p className="title">Usuarios</p>
                         </div>
                         <InputSearch />
                         <div className="containerItemUser">

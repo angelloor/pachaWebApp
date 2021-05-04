@@ -24,7 +24,8 @@ const Store = (props) => {
         <div className="containerHome">
             <Layout>
                 <div className="titleSection">
-                    <h1 className="title">Tienda</h1>
+                    <p>Inicio / </p>
+                    <p className="title">Tienda</p>
                 </div>
                 <div className="containerNews">
                     <div className="containerCard">
@@ -53,17 +54,19 @@ const Store = (props) => {
                     </div>
                     <div className="containerItems">
                         <InputSearch />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
-                        <ItemStore />
+                        <div className="containerI">
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                            <ItemStore />
+                        </div>
                     </div>
                 </div>
             </Layout>

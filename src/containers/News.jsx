@@ -24,7 +24,8 @@ const News = (props) => {
         <div className="containerHome">
             <Layout>
                 <div className="titleSection">
-                    <h1 className="title">Noticias</h1>
+                    <p>Inicio / </p>
+                    <p className="title">Noticias</p>
                 </div>
                 <div className="containerNews">
                     <div className="containerCard">
@@ -56,17 +57,19 @@ const News = (props) => {
                     </div>
                     <div className="containerItems">
                         <InputSearch />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
-                        <ItemNews />
+                        <div className="containerI">
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                            <ItemNews />
+                        </div>
                     </div>
                 </div>
             </Layout>
