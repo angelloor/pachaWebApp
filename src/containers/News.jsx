@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Alert } from 'reactstrap'
 import iconCamera from '../assets/static/edit.svg'
-import newImg from '../assets/static/newImg.png'
+import newImg from '../assets/static/newImg.svg'
 import noAutorizado from '../assets/static/noAutorizado.svg'
 import '../assets/styles/BackgroundImage.scss'
 import '../assets/styles/components/Home.scss'
@@ -31,10 +31,6 @@ const News = (props) => {
     const sdescription = document.getElementById('description')
     const snameBtn = document.getElementById('nameBtn')
     const slink = document.getElementById('link')
-
-
-
-
 
     const [news, setNews] = useState([])
     const [query, setQuery] = useState('')
@@ -80,7 +76,6 @@ const News = (props) => {
         setTextConfirm(text)
         setModalConfirm(true)
         setSelect(select)
-        console.log(select)
         setItemSelect(id)
     }
 
@@ -90,9 +85,7 @@ const News = (props) => {
         setModalConfirm(false)
         setSelect(0)
         setItemSelect('')
-
     }
-
 
     //change input
     const handleChangeTitle = (e) => {
@@ -128,11 +121,18 @@ const News = (props) => {
     }
 
     const handleSubmit = () => {
+        const iSelect = sessionStorage.getItem('itemSelect')
+
         const selectedFile = inputFile.files[0]
 
-        if (!selectedFile && select == 2) {
-            openModal('', 'Tienes que seleccionar una foto de la noticia')
-            return
+        const option = sessionStorage.getItem('option')
+
+        if (option != 'actualizar') {
+            console.log('tienes que comprobar')
+            if (!selectedFile) {
+                openModal('', 'Tienes que seleccionar una foto de la noticia')
+                return
+            }
         }
 
         if (!title) {
@@ -155,62 +155,88 @@ const News = (props) => {
             return
         }
 
-        var formData = new FormData()
+        if (option == 'actualizar') {
+            var formData = new FormData()
 
-        formData.append('image', selectedFile)
-        formData.append('title', title)
-        formData.append('description', description)
-        formData.append('nameBtn', nameBtn)
-        formData.append('url', url)
+            formData.append('title', title)
+            formData.append('description', description)
+            formData.append('nameBtn', nameBtn)
+            formData.append('url', url)
+            formData.append('id', iSelect)
 
-        Http.instance.postFormData('/webApp/saveImageNew', formData)
-            .then((response) => {
-                if (response.body) {
-                    openModal('', 'Noticia agregada correctamente')
+            if (selectedFile) {
+                console.log('http con imagen')
+                formData.append('image', selectedFile)
+
+                Http.instance.postFormData('/webApp/saveCImage', formData)
+                    .then((response) => {
+                        if (response.body) {
+                            openModal('', 'Noticia actualizada correctamente')
+                        }
+                        getNews()
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+
+            } else {
+                console.log('http sin imagen')
+                const body = {
+                    title,
+                    description,
+                    nameBtn,
+                    url,
+                    id: iSelect,
                 }
-                getNews()
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+                Http.instance.post('/webApp/saveSImage', body)
+                    .then((response) => {
+                        if (response.body) {
+                            openModal('', 'Noticia actualizada correctamente')
+                        }
+                        getNews()
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+
+
+        } else {
+            var formData = new FormData()
+
+            formData.append('image', selectedFile)
+            formData.append('title', title)
+            formData.append('description', description)
+            formData.append('nameBtn', nameBtn)
+            formData.append('url', url)
+
+            Http.instance.postFormData('/webApp/saveImageNew', formData)
+                .then((response) => {
+                    if (response.body) {
+                        openModal('', 'Noticia agregada correctamente')
+                    }
+                    getNews()
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+        clearStatus()
     }
 
-
-    //actualizar
-    const handleUpdateSend = () => {
-        const selectedFile = inputFile.files[0]
-
-        if (!selectedFile && select == 2) {
-            openModal('', 'Tienes que seleccionar una foto de la noticia')
-            return
-        }
-
-        if (!title) {
-            openModal('', 'Tienes que ingresar el titulo de la noticia')
-            return
-        }
-
-        if (!description) {
-            openModal('', 'Tienes que ingresar la descripcion de la noticia de la noticia')
-            return
-        }
-
-        if (!nameBtn) {
-            openModal('', 'Tienes que ingresar el nombre de boton de la noticia')
-            return
-        }
-
-        if (!url) {
-            openModal('', 'Tienes que ingresar la url de la noticia')
-            return
-        }
-
-        console.log(title)
-        console.log(description)
-        console.log(nameBtn)
-        console.log(url)
-
-        console.log('todo Ok');
+    const clearStatus = () => {
+        imageElement.setAttribute('src', newImg)
+        inputFile.value = ''
+        stitle.value = ''
+        sdescription.value = ''
+        snameBtn.value = ''
+        slink.value = ''
+        setTitle('')
+        setDescription('')
+        setNameBtn('')
+        setUrl('')
+        sessionStorage.removeItem('option')
+        sessionStorage.removeItem('itemSelect')
 
     }
 
@@ -219,6 +245,7 @@ const News = (props) => {
     }
 
     const handleUpdate = (id) => {
+        sessionStorage.setItem('option', 'actualizar')
         openModalConfirm('', 'estas seguro de actualizar?', 2, id)
     }
 
@@ -228,7 +255,9 @@ const News = (props) => {
                 .then((response) => {
                     if (response.body) {
                         openModal('', 'Noticia Eliminada')
+                        clearStatus()
                     }
+                    getNews()
                 })
                 .catch((err) => {
                     console.log(err)
@@ -246,6 +275,7 @@ const News = (props) => {
                     setNameBtn(response.body[0].nameButton)
                     setUrl(response.body[0].linkButton)
 
+                    sessionStorage.setItem('itemSelect', response.body[0]._id)
                     const url = `${Http.instance.server}${response.body[0].imageUrl}`
                     imageElement.setAttribute('src', url)
 
@@ -292,8 +322,8 @@ const News = (props) => {
                                         <input className="input" type="text" id="link" placeholder="Url" onChange={handleChangeUrl} />
                                     </div>
                                     <div className="containerBtns">
-                                        <a className="btn" onClick={handleUpdateSend}>Actualizar</a>
-                                        <a className="btn" onClick={handleSubmit}>Agregar</a>
+                                        <a className="btn" onClick={clearStatus}>Cancelar</a>
+                                        <a className="btn" onClick={handleSubmit}>Guardar</a>
                                     </div>
                                 </div>
                             </div>

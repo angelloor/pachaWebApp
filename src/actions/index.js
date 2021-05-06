@@ -3,6 +3,7 @@ export const actions = {
     cambiarUsers: 'CAMBIAR_USERS',
     cambiarNews: 'CAMBIAR_NEWS',
     cambiarStoreItem: 'CAMBIAR_STORE_ITEM',
+    cambiarYourShopping: 'CAMBIAR_YOUR_SHOPPING'
 }
 
 export const cambiarUserLogin = payload => ({
@@ -25,3 +26,7 @@ export const cambiarStoreItem = payload => ({
     payload,
 });
 
+export const cambiarYourShopping = payload => ({
+    type: actions.cambiarYourShopping,
+    payload,
+});

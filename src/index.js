@@ -11,7 +11,8 @@ const initialState = {
   userLogin: "",
   users: [],
   news: [],
-  storeItem: []
+  storeItem: [],
+  yourShopping: []
 }
 
 // Debugging para Redux en Chrome

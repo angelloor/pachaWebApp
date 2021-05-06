@@ -22,6 +22,11 @@ const reducer = (state, action) => {
                 ...state,
                 storeItem: action.payload
             }
+        case actions.cambiarYourShopping:
+            return {
+                ...state,
+                yourShopping: action.payload
+            }
         default:
             return state;
     }

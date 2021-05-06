@@ -3,7 +3,6 @@ import iconDelete from '../../assets/static/delete.svg'
 import iconEdit from '../../assets/static/edit.svg'
 import '../../assets/styles/components/News.scss'
 
-
 const ItemNews = ({ item, handleDelete, handleUpdate }) => {
     return (
         <div className="containerItem">

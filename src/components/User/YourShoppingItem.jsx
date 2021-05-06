@@ -4,7 +4,7 @@ import iconRetun from '../../assets/static/return.svg';
 import Http from '../../libs/http';
 
 const YourShoppingItem = props => {
-    const { handleDelivery, handleReturnDelivery } = props
+    const { handleDelivery, handleReturnDelivery, index } = props
     const { itemId, deliveryStatus, deliveryDate, shoppingDate, _id } = props.item
     const url = itemId.urlImage
     const urlResource = `${Http.instance.server}${url}`
@@ -24,11 +24,11 @@ const YourShoppingItem = props => {
                 </div>
                 <div className="containerOptions">
                     {(deliveryStatus) ?
-                        <a onClick={() => handleReturnDelivery(_id)} className="btnOptions">
+                        <a onClick={() => handleReturnDelivery(_id, index)} className="btnOptions">
                             <img src={iconRetun} alt="botones" />
                         </a>
                         :
-                        <a onClick={() => handleDelivery(_id)} className="btnOptions">
+                        <a onClick={() => handleDelivery(_id, index)} className="btnOptions">
                             <img src={iconOk} alt="botones" />
                         </a>
                     }

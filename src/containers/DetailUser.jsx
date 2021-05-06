@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Alert } from 'reactstrap'
+import { cambiarYourShopping } from '../actions/index.js'
 import noAutorizado from '../assets/static/noAutorizado.svg'
 import '../assets/styles/BackgroundImage.scss'
 import '../assets/styles/components/DetailUser.scss'
@@ -14,13 +16,13 @@ import ChallengueItem from '../components/User/ChallengueItem'
 import TopicItem from '../components/User/TopicItem'
 import YourShoppingItem from '../components/User/YourShoppingItem'
 import Http from '../libs/http'
+import { getDate } from '../utils/otherUtils.js'
 
 const DetailUser = (props) => {
     const username = sessionStorage.getItem('username')
     let { id } = useParams();
 
     const [user, setUser] = useState({})
-    const [yourShopping, setYourShopping] = useState([])
     const [content, setContent] = useState([])
 
     useEffect(() => {
@@ -30,9 +32,9 @@ const DetailUser = (props) => {
     const getData = (id) => {
         Http.instance.post('/webApp/getData', { _id: id })
             .then(response => {
-                console.log(response.body);
+                console.log(response.body.yourShopping)
                 setUser(response.body.user)
-                setYourShopping(response.body.yourShopping)
+                props.cambiarYourShopping(response.body.yourShopping)
                 setContent(response.body.content)
             })
             .catch(err => {
@@ -40,13 +42,33 @@ const DetailUser = (props) => {
             })
     }
 
-    const handleDelivery = (id) => {
+    const handleDelivery = (id, index) => {
+        setIndex(index)
         openModal('', 'Estas seguro de entregar el premio?', 1, id)
     }
 
-    const handleReturnDelivery = (id) => {
+    const handleReturnDelivery = (id, index) => {
+        setIndex(index)
         openModal('', 'Estas seguro retornar el premio?', 2, id)
     }
+
+    const changeStateYourShopping = (id) => {
+        const array = props.yourShopping
+
+        console.log(array)
+
+        const item = array.filter((item) => item._id == id)
+        const newItem = {
+            ...item[0],
+            deliveryStatus: !item[0].deliveryStatus,
+            deliveryDate: (item[0].deliveryDate) ? '' : getDate()
+        }
+
+        array.splice(index, 1)
+        array.splice(index, 0, newItem)
+        return array
+    }
+
 
     const confirm = (select) => {
         const body = {
@@ -55,7 +77,8 @@ const DetailUser = (props) => {
         if (select == 1) {
             Http.instance.post('/webApp/delivery', body)
                 .then((response) => {
-                    console.log(response)
+                    let newArray = changeStateYourShopping(itemSelect)
+                    props.cambiarYourShopping(newArray)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -63,13 +86,13 @@ const DetailUser = (props) => {
         } else {
             Http.instance.post('/webApp/returnDelivery', body)
                 .then((response) => {
-                    console.log(response)
+                    let newArray = changeStateYourShopping(itemSelect)
+                    props.cambiarYourShopping(newArray)
                 })
                 .catch((err) => {
                     console.log(err)
                 })
         }
-        getData(id)
         closeModal()
     }
     //modal
@@ -79,6 +102,7 @@ const DetailUser = (props) => {
     const [text, setText] = useState('')
     const [select, setSelect] = useState(0)
     const [itemSelect, setItemSelect] = useState('')
+    const [index, setIndex] = useState(undefined)
 
     const openModal = (title, text, select, id) => {
         setTitle(title)
@@ -114,11 +138,11 @@ const DetailUser = (props) => {
                                 </div>
                             </div>
                             <div className="containerShopping">
-                                <div className={(yourShopping.length == 0 ? 'otherCss' : '')}>
-                                    {(yourShopping.length == 0) ?
+                                <div className={(props.yourShopping.length == 0 ? 'otherCss' : '')}>
+                                    {(props.yourShopping.length == 0) ?
                                         <Alert color="success">No tiene compras aún</Alert>
                                         :
-                                        yourShopping.map((item) => <YourShoppingItem key={item._id} item={item} handleDelivery={handleDelivery} handleReturnDelivery={handleReturnDelivery} />)
+                                        props.yourShopping.map((item, index) => <YourShoppingItem key={item._id} item={item} index={index} handleDelivery={handleDelivery} handleReturnDelivery={handleReturnDelivery} />)
 
                                     }
                                 </div>
@@ -163,4 +187,15 @@ const DetailUser = (props) => {
     )
 }
 
-export default DetailUser
+const mapStateToProps = state => {
+    return {
+        yourShopping: state.yourShopping,
+    }
+}
+
+const mapDispatchToProps = {
+    cambiarYourShopping,
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailUser)
