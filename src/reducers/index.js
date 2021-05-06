@@ -1,4 +1,4 @@
-import { actions } from '../actions/index.js';
+import { actions } from '../actions/index.js'
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -28,8 +28,8 @@ const reducer = (state, action) => {
                 yourShopping: action.payload
             }
         default:
-            return state;
+            return state
     }
-};
+}
 
-export default reducer;
+export default reducer

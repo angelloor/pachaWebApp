@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom'
 import '../../assets/styles/components/Users.scss'
 import { getLevel } from '../../Utils/index'
 
-const ItemUser = props => {
-    const { names, coint, experience, _id } = props.user
-
+const ItemUser = ({ user }) => {
+    const { names, coint, experience, _id } = user
     const level = getLevel(experience)
 
     return (

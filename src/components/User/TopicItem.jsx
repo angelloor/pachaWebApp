@@ -1,10 +1,9 @@
-import React from 'react';
-import Http from '../../libs/http';
+import React from 'react'
+import Http from '../../libs/http'
 
 const TopicItem = ({ item }) => {
     const { imageUrl, name } = item
     const urlServer = Http.instance.server
-
     const urlImgCategory = `${urlServer}${imageUrl}`
 
     return (
@@ -18,7 +17,7 @@ const TopicItem = ({ item }) => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default TopicItem;
+export default TopicItem

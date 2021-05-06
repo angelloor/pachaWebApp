@@ -1,12 +1,12 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import DetailUser from '../containers/DetailUser';
-import Home from '../containers/Home';
-import Login from '../containers/Login';
-import News from '../containers/News';
-import NotFount from '../containers/NotFount';
-import Store from '../containers/Store';
-import Users from '../containers/Users';
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import DetailUser from '../containers/DetailUser'
+import Home from '../containers/Home'
+import Login from '../containers/Login'
+import News from '../containers/News'
+import NotFount from '../containers/NotFount'
+import Store from '../containers/Store'
+import Users from '../containers/Users'
 
 const App = () => (
   <BrowserRouter>
@@ -20,6 +20,6 @@ const App = () => (
       <Route component={NotFount} />
     </Switch>
   </BrowserRouter>
-);
+)
 
-export default App;
+export default App

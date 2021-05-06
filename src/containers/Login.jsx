@@ -8,13 +8,14 @@ import SimpleModal from '../components/SimpleModal'
 import Http from '../libs/http'
 
 const Login = (props) => {
+    //estado
     const [username, setUsename] = useState('')
     const [password, setPassword] = useState('')
     const [modal, setModal] = useState(false)
-
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
 
+    //function
     const openModal = (title, text) => {
         setTitle(title)
         setText(text)

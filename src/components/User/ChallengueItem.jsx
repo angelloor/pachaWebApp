@@ -1,11 +1,9 @@
-import React from 'react';
-import { SRLWrapper } from "simple-react-lightbox";
-import Http from '../../libs/http';
+import React from 'react'
+import { SRLWrapper } from "simple-react-lightbox"
+import Http from '../../libs/http'
 
 const ChallengueItem = ({ item }) => {
-
     const { imageUrl, imageCategory, name } = item
-
     const urlServer = Http.instance.server
     const urlImgCategory = `${urlServer}/green${imageCategory}`
     const urlImgChallenge = `${urlServer}${imageUrl}`
@@ -32,7 +30,7 @@ const ChallengueItem = ({ item }) => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default ChallengueItem;
+export default ChallengueItem

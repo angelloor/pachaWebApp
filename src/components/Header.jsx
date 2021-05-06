@@ -6,7 +6,6 @@ import '../assets/styles/components/Header.scss'
 const Header = (props) => {
     const handleClose = () => {
         sessionStorage.clear()
-        console.log('limpiando cache')
     }
 
     return (

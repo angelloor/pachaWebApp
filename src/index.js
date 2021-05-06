@@ -1,11 +1,11 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { compose, createStore } from 'redux';
-import SimpleReactLightbox from 'simple-react-lightbox';
-import reducer from './reducers';
-import App from './routes/App';
+import 'bootstrap/dist/css/bootstrap.css'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { compose, createStore } from 'redux'
+import SimpleReactLightbox from 'simple-react-lightbox'
+import reducer from './reducers'
+import App from './routes/App'
 
 const initialState = {
   userLogin: "",
@@ -16,9 +16,9 @@ const initialState = {
 }
 
 // Debugging para Redux en Chrome
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const store = createStore(reducer, initialState, composeEnhancers());
+const store = createStore(reducer, initialState, composeEnhancers())
 
 ReactDOM.render(
   <Provider store={store}>
@@ -27,7 +27,7 @@ ReactDOM.render(
     </SimpleReactLightbox>
   </Provider>,
   document.getElementById('app')
-);
+)
 
 if (module.hot) {
   module.hot.accept('./routes/App', () => {
@@ -39,7 +39,7 @@ if (module.hot) {
         </SimpleReactLightbox>
       </Provider>,
       document.getElementById('app')
-    );
+    )
   })
 }
 

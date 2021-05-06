@@ -23,28 +23,43 @@ const News = (props) => {
         getNews()
     }, [])
 
-    //selectore
+    //selectores
     const inputFile = document.getElementById('upload-photo')
     const imageElement = document.getElementById('imagePreview')
-
     const stitle = document.getElementById('title')
     const sdescription = document.getElementById('description')
     const snameBtn = document.getElementById('nameBtn')
     const slink = document.getElementById('link')
 
+    //estado
     const [news, setNews] = useState([])
     const [query, setQuery] = useState('')
-
     //inputs
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [nameBtn, setNameBtn] = useState('')
     const [url, setUrl] = useState('')
-
     //modal
     const [modal, setModal] = useState(false)
     const [titleModal, setTitleModal] = useState('')
     const [text, setText] = useState('')
+    //modal Confirm
+    const [modalConfirm, setModalConfirm] = useState(false)
+    const [titleConfirm, setTitleConfirm] = useState('')
+    const [textConfirm, setTextConfirm] = useState('')
+    const [select, setSelect] = useState(0)
+    const [itemSelect, setItemSelect] = useState('')
+
+    //function
+    const getNews = () => {
+        Http.instance.get('/news')
+            .then((response) => {
+                setNews(response.body)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
 
     const filterNews = news.filter((news) => {
         return news.title.toLowerCase().includes(query)
@@ -63,14 +78,7 @@ const News = (props) => {
         setModal(false)
     }
 
-    //modal Confirm
-    const [modalConfirm, setModalConfirm] = useState(false)
-    const [titleConfirm, setTitleConfirm] = useState('')
-    const [textConfirm, setTextConfirm] = useState('')
-    const [select, setSelect] = useState(0)
-    const [itemSelect, setItemSelect] = useState('')
-
-    //modal
+    //modalConfirm
     const openModalConfirm = (title, text, select, id) => {
         setTitleConfirm(title)
         setTextConfirm(text)
@@ -104,31 +112,42 @@ const News = (props) => {
         setUrl(e.target.value)
     }
 
-    const getNews = () => {
-        Http.instance.get('/news')
-            .then((response) => {
-                setNews(response.body)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
-
     const handleChangeImage = (e) => {
         const selectedFile = inputFile.files[0]
         const urlImg = URL.createObjectURL(selectedFile)
         imageElement.setAttribute('src', urlImg)
     }
 
+    const handleDelete = (id) => {
+        openModalConfirm('', 'estas seguro de elimar?', 1, id)
+    }
+
+    const handleUpdate = (id) => {
+        sessionStorage.setItem('option', 'actualizar')
+        openModalConfirm('', 'estas seguro de actualizar?', 2, id)
+    }
+
+    const clearStatus = () => {
+        imageElement.setAttribute('src', newImg)
+        inputFile.value = ''
+        stitle.value = ''
+        sdescription.value = ''
+        snameBtn.value = ''
+        slink.value = ''
+        setTitle('')
+        setDescription('')
+        setNameBtn('')
+        setUrl('')
+        sessionStorage.removeItem('option')
+        sessionStorage.removeItem('itemSelect')
+    }
+
     const handleSubmit = () => {
         const iSelect = sessionStorage.getItem('itemSelect')
-
         const selectedFile = inputFile.files[0]
-
         const option = sessionStorage.getItem('option')
 
         if (option != 'actualizar') {
-            console.log('tienes que comprobar')
             if (!selectedFile) {
                 openModal('', 'Tienes que seleccionar una foto de la noticia')
                 return
@@ -165,7 +184,6 @@ const News = (props) => {
             formData.append('id', iSelect)
 
             if (selectedFile) {
-                console.log('http con imagen')
                 formData.append('image', selectedFile)
 
                 Http.instance.postFormData('/webApp/saveCImage', formData)
@@ -180,7 +198,6 @@ const News = (props) => {
                     })
 
             } else {
-                console.log('http sin imagen')
                 const body = {
                     title,
                     description,
@@ -199,8 +216,6 @@ const News = (props) => {
                         console.log(err)
                     })
             }
-
-
         } else {
             var formData = new FormData()
 
@@ -222,31 +237,6 @@ const News = (props) => {
                 })
         }
         clearStatus()
-    }
-
-    const clearStatus = () => {
-        imageElement.setAttribute('src', newImg)
-        inputFile.value = ''
-        stitle.value = ''
-        sdescription.value = ''
-        snameBtn.value = ''
-        slink.value = ''
-        setTitle('')
-        setDescription('')
-        setNameBtn('')
-        setUrl('')
-        sessionStorage.removeItem('option')
-        sessionStorage.removeItem('itemSelect')
-
-    }
-
-    const handleDelete = (id) => {
-        openModalConfirm('', 'estas seguro de elimar?', 1, id)
-    }
-
-    const handleUpdate = (id) => {
-        sessionStorage.setItem('option', 'actualizar')
-        openModalConfirm('', 'estas seguro de actualizar?', 2, id)
     }
 
     const confirm = () => {

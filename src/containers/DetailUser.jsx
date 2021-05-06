@@ -18,23 +18,32 @@ import YourShoppingItem from '../components/User/YourShoppingItem'
 import Http from '../libs/http'
 import { getDate } from '../utils/otherUtils.js'
 
-const DetailUser = (props) => {
+const DetailUser = ({ cambiarYourShopping, yourShopping }) => {
     const username = sessionStorage.getItem('username')
-    let { id } = useParams();
-
-    const [user, setUser] = useState({})
-    const [content, setContent] = useState([])
+    let { id } = useParams()
 
     useEffect(() => {
         getData(id)
     }, [])
 
+    //estado
+    const [user, setUser] = useState({})
+    const [content, setContent] = useState([])
+    //modal
+    const [modal, setModal] = useState(false)
+    const [title, setTitle] = useState('')
+    const [text, setText] = useState('')
+
+    const [select, setSelect] = useState(0)
+    const [itemSelect, setItemSelect] = useState('')
+    const [index, setIndex] = useState(undefined)
+
+    //function
     const getData = (id) => {
         Http.instance.post('/webApp/getData', { _id: id })
             .then(response => {
-                console.log(response.body.yourShopping)
                 setUser(response.body.user)
-                props.cambiarYourShopping(response.body.yourShopping)
+                cambiarYourShopping(response.body.yourShopping)
                 setContent(response.body.content)
             })
             .catch(err => {
@@ -42,68 +51,7 @@ const DetailUser = (props) => {
             })
     }
 
-    const handleDelivery = (id, index) => {
-        setIndex(index)
-        openModal('', 'Estas seguro de entregar el premio?', 1, id)
-    }
-
-    const handleReturnDelivery = (id, index) => {
-        setIndex(index)
-        openModal('', 'Estas seguro retornar el premio?', 2, id)
-    }
-
-    const changeStateYourShopping = (id) => {
-        const array = props.yourShopping
-
-        console.log(array)
-
-        const item = array.filter((item) => item._id == id)
-        const newItem = {
-            ...item[0],
-            deliveryStatus: !item[0].deliveryStatus,
-            deliveryDate: (item[0].deliveryDate) ? '' : getDate()
-        }
-
-        array.splice(index, 1)
-        array.splice(index, 0, newItem)
-        return array
-    }
-
-
-    const confirm = (select) => {
-        const body = {
-            itemBuy: itemSelect
-        }
-        if (select == 1) {
-            Http.instance.post('/webApp/delivery', body)
-                .then((response) => {
-                    let newArray = changeStateYourShopping(itemSelect)
-                    props.cambiarYourShopping(newArray)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        } else {
-            Http.instance.post('/webApp/returnDelivery', body)
-                .then((response) => {
-                    let newArray = changeStateYourShopping(itemSelect)
-                    props.cambiarYourShopping(newArray)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
-        closeModal()
-    }
-    //modal
-    const [modal, setModal] = useState(false)
-
-    const [title, setTitle] = useState('')
-    const [text, setText] = useState('')
-    const [select, setSelect] = useState(0)
-    const [itemSelect, setItemSelect] = useState('')
-    const [index, setIndex] = useState(undefined)
-
+    //Modal
     const openModal = (title, text, select, id) => {
         setTitle(title)
         setText(text)
@@ -118,6 +66,57 @@ const DetailUser = (props) => {
         setModal(false)
         setSelect(0)
         setItemSelect('')
+    }
+
+    const handleDelivery = (id, index) => {
+        setIndex(index)
+        openModal('', 'Estas seguro de entregar el premio?', 1, id)
+    }
+
+    const handleReturnDelivery = (id, index) => {
+        setIndex(index)
+        openModal('', 'Estas seguro retornar el premio?', 2, id)
+    }
+
+    const changeStateYourShopping = (id) => {
+        const array = yourShopping
+
+        const item = array.filter((item) => item._id == id)
+        const newItem = {
+            ...item[0],
+            deliveryStatus: !item[0].deliveryStatus,
+            deliveryDate: (item[0].deliveryDate) ? '' : getDate()
+        }
+
+        array.splice(index, 1)
+        array.splice(index, 0, newItem)
+        return array
+    }
+
+    const confirm = (select) => {
+        const body = {
+            itemBuy: itemSelect
+        }
+        if (select == 1) {
+            Http.instance.post('/webApp/delivery', body)
+                .then(() => {
+                    let newArray = changeStateYourShopping(itemSelect)
+                    cambiarYourShopping(newArray)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        } else {
+            Http.instance.post('/webApp/returnDelivery', body)
+                .then((response) => {
+                    let newArray = changeStateYourShopping(itemSelect)
+                    cambiarYourShopping(newArray)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+        closeModal()
     }
 
     return (
@@ -138,11 +137,11 @@ const DetailUser = (props) => {
                                 </div>
                             </div>
                             <div className="containerShopping">
-                                <div className={(props.yourShopping.length == 0 ? 'otherCss' : '')}>
-                                    {(props.yourShopping.length == 0) ?
+                                <div className={(yourShopping.length == 0 ? 'otherCss' : '')}>
+                                    {(yourShopping.length == 0) ?
                                         <Alert color="success">No tiene compras aún</Alert>
                                         :
-                                        props.yourShopping.map((item, index) => <YourShoppingItem key={item._id} item={item} index={index} handleDelivery={handleDelivery} handleReturnDelivery={handleReturnDelivery} />)
+                                        yourShopping.map((item, index) => <YourShoppingItem key={item._id} item={item} index={index} handleDelivery={handleDelivery} handleReturnDelivery={handleReturnDelivery} />)
 
                                     }
                                 </div>
@@ -158,7 +157,6 @@ const DetailUser = (props) => {
                                                 content.map((item) => <TopicItem key={item._id} item={item} />)
                                         }
                                     </div>
-
                                     :
                                     <div className={content.length == 0 ? 'otherCss' : ''}>
                                         {
@@ -168,8 +166,6 @@ const DetailUser = (props) => {
                                                 content.map((item) => <ChallengueItem key={item._id} item={item} />)
                                         }
                                     </div>
-
-
                                 }
                             </div>
                         </div>

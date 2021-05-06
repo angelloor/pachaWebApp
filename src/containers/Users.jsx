@@ -14,35 +14,36 @@ import PageLoading from '../components/PageLoading'
 import ItemUser from '../components/User/ItemUser'
 import Http from '../libs/http'
 
-const Users = (props) => {
+const Users = ({ cambiarUsers }) => {
     const username = sessionStorage.getItem('username')
-
-    const [loading, setLoading] = useState(false)
-    const [users, setUsers] = useState([])
-    const [query, setQuery] = useState('')
-
-    const filterUsers = users.filter((user) => {
-        return user.names.toLowerCase().includes(query)
-    })
 
     useEffect(async () => {
         await getUsers()
     }, [])
 
+    //estado
+    const [loading, setLoading] = useState(false)
+    const [users, setUsers] = useState([])
+    const [query, setQuery] = useState('')
+
+    //function
     const getUsers = async () => {
         setLoading(true)
         Http.instance.get('/webApp/listUsers')
             .then(response => {
                 setLoading(false)
-                props.cambiarUsers(response.body)
+                cambiarUsers(response.body)
                 setUsers(response.body)
-
             })
             .catch((error) => {
                 setLoading(false)
                 console.log(error)
             })
     }
+
+    const filterUsers = users.filter((user) => {
+        return user.names.toLowerCase().includes(query)
+    })
 
     return (
         <>

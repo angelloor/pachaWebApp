@@ -1,9 +1,9 @@
-import React from 'react';
-import iconUser from '../../assets/static/user.png';
-import { getLevel } from '../../Utils/index';
+import React from 'react'
+import iconUser from '../../assets/static/user.png'
+import { getLevel } from '../../Utils/index'
 
-const CardUser = (props) => {
-    const { birdOfDate, names, experience, coint, age, numberID, email, phone, registerOfDate } = props.user;
+const CardUser = ({ user }) => {
+    const { birdOfDate, names, experience, coint, age, numberID, email, phone, registerOfDate } = user
     const level = getLevel(experience)
 
     return (
@@ -26,7 +26,7 @@ const CardUser = (props) => {
                 <p><strong>Fecha de registro: </strong>{registerOfDate}</p>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default CardUser;
+export default CardUser

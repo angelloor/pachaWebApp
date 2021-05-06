@@ -1,8 +1,7 @@
 import React from 'react'
 import '../assets/styles/components/Home.scss'
 
-const InputSearch = props => {
-    const { query, setQuery } = props
+const InputSearch = ({ query, setQuery }) => {
     return (
         <div className="rowImputSearch">
             <div className="containerInputSearch">
@@ -16,6 +15,5 @@ const InputSearch = props => {
         </div>
     )
 }
-
 
 export default InputSearch

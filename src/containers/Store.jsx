@@ -23,10 +23,9 @@ const Store = (props) => {
         getStoreItem()
     }, [])
 
-    //selectore
+    //selectores
     const inputFile = document.getElementById('upload-photo')
     const imageElement = document.getElementById('imagePreviewStore')
-
     const sname = document.getElementById('name')
     const sdescription = document.getElementById('description')
     const sprice = document.getElementById('price')
@@ -34,17 +33,14 @@ const Store = (props) => {
     //estado
     const [query, setQuery] = useState('')
     const [storeItem, setStoreItem] = useState([])
-
     //inputs
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
-
     //modal
     const [modal, setModal] = useState(false)
     const [titleModal, setTitleModal] = useState('')
     const [text, setText] = useState('')
-
     //modal Confirm
     const [modalConfirm, setModalConfirm] = useState(false)
     const [titleConfirm, setTitleConfirm] = useState('')
@@ -52,54 +48,22 @@ const Store = (props) => {
     const [select, setSelect] = useState(0)
     const [itemSelect, setItemSelect] = useState('')
 
-    //change input
-    const handleName = (e) => {
-        setName(e.target.value)
-        console.log(e.target.value)
-    }
 
-    const handleDescription = (e) => {
-        setDescription(e.target.value)
-        console.log(e.target.value)
-    }
-
-    const handlePrice = (e) => {
-        setPrice(e.target.value)
-        console.log(e.target.value)
-    }
 
     //funciones
     const getStoreItem = () => {
         Http.instance.get('/storeItem')
             .then((response) => {
                 setStoreItem(response.body)
-                console.log(response.body);
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
-    const handleDelete = (id) => {
-        console.log(id)
-        openModalConfirm('', 'estas seguro de elimar?', 1, id)
-    }
-
-    const handleUpdate = (id) => {
-        console.log(id)
-        sessionStorage.setItem('option', 'actualizar')
-        openModalConfirm('', 'estas seguro de actualizar?', 2, id)
-    }
-
     const filterStoreItem = storeItem.filter((storeItem) => {
         return storeItem.title.toLowerCase().includes(query)
     })
-
-    const handleChangeImage = (e) => {
-        const selectedFile = inputFile.files[0]
-        const urlImg = URL.createObjectURL(selectedFile)
-        imageElement.setAttribute('src', urlImg)
-    }
 
     //modal
     const openModal = (title, text) => {
@@ -131,6 +95,35 @@ const Store = (props) => {
         setItemSelect('')
     }
 
+    //change input
+    const handleName = (e) => {
+        setName(e.target.value)
+    }
+
+    const handleDescription = (e) => {
+        setDescription(e.target.value)
+    }
+
+    const handlePrice = (e) => {
+        setPrice(e.target.value)
+    }
+
+    const handleChangeImage = (e) => {
+        const selectedFile = inputFile.files[0]
+        const urlImg = URL.createObjectURL(selectedFile)
+        imageElement.setAttribute('src', urlImg)
+    }
+
+
+    const handleDelete = (id) => {
+        openModalConfirm('', 'estas seguro de elimar?', 1, id)
+    }
+
+    const handleUpdate = (id) => {
+        sessionStorage.setItem('option', 'actualizar')
+        openModalConfirm('', 'estas seguro de actualizar?', 2, id)
+    }
+
     const clearStatus = () => {
         imageElement.setAttribute('src', newImg)
         inputFile.value = ''
@@ -152,7 +145,6 @@ const Store = (props) => {
         const option = sessionStorage.getItem('option')
 
         if (option != 'actualizar') {
-            console.log('tienes que comprobar')
             if (!selectedFile) {
                 openModal('', 'Tienes que seleccionar una foto para el item')
                 return
@@ -175,10 +167,7 @@ const Store = (props) => {
         }
 
         if (option == 'actualizar') {
-            console.log('actualizar');
             if (selectedFile) {
-                console.log('http con imagen')
-
                 var formData = new FormData()
 
                 formData.append('name', name)
@@ -199,7 +188,6 @@ const Store = (props) => {
                     })
 
             } else {
-                console.log('http sin imagen')
                 const body = {
                     name,
                     description,
@@ -220,7 +208,6 @@ const Store = (props) => {
 
 
         } else {
-            console.log('agregar');
             var formData = new FormData()
 
             formData.append('image', selectedFile)
@@ -244,8 +231,6 @@ const Store = (props) => {
 
     const confirm = () => {
         if (select == 1) {
-            console.log('eliminar');
-            console.log(itemSelect)
             Http.instance.delete(`/storeItem`, itemSelect)
                 .then((response) => {
                     if (response.body) {
@@ -258,12 +243,8 @@ const Store = (props) => {
                     console.log(err)
                 })
         } else {
-            console.log('traer info item para ctualizar');
-            console.log(itemSelect)
             Http.instance.get(`/storeItem?idStoreItem=${itemSelect}`)
                 .then((response) => {
-                    console.log(response);
-
                     sname.value = response.body[0].title
                     sdescription.value = response.body[0].description
                     sprice.value = response.body[0].price

@@ -1,11 +1,10 @@
-import React from 'react';
-import iconOk from '../../assets/static/ok.svg';
-import iconRetun from '../../assets/static/return.svg';
-import Http from '../../libs/http';
+import React from 'react'
+import iconOk from '../../assets/static/ok.svg'
+import iconRetun from '../../assets/static/return.svg'
+import Http from '../../libs/http'
 
-const YourShoppingItem = props => {
-    const { handleDelivery, handleReturnDelivery, index } = props
-    const { itemId, deliveryStatus, deliveryDate, shoppingDate, _id } = props.item
+const YourShoppingItem = ({ handleDelivery, handleReturnDelivery, index, item }) => {
+    const { itemId, deliveryStatus, deliveryDate, shoppingDate, _id } = item
     const url = itemId.urlImage
     const urlResource = `${Http.instance.server}${url}`
 
@@ -35,7 +34,7 @@ const YourShoppingItem = props => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default YourShoppingItem;
+export default YourShoppingItem
