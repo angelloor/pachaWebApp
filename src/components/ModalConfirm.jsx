@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 
-const SimpleModal = props => {
-    const { title, text, modal, toggle } = props
+const ModalConfirm = props => {
+    const { title, text, modal, toggle, confirm, select } = props
 
     return (
         <Modal isOpen={modal} toggle={toggle}>
@@ -11,7 +11,8 @@ const SimpleModal = props => {
                 {text}
             </ModalBody>
             <ModalFooter>
-                <Button color="success" onClick={toggle}>Ok</Button>
+                <Button color="secondary" onClick={toggle}>Cancelar</Button>
+                <Button color="success" onClick={() => confirm(select)}>Si</Button>
             </ModalFooter>
         </Modal>
     )
@@ -21,4 +22,4 @@ Modal.propTypes = {
 
 }
 
-export default SimpleModal
+export default ModalConfirm

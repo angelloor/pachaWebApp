@@ -1,13 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Logo from '../assets/static/logoMenu.svg';
-import '../assets/styles/components/Header.scss';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Logo from '../assets/static/logoMenu.svg'
+import '../assets/styles/components/Header.scss'
 
 const Header = (props) => {
-
-    const handleOpenOptions = () => {
-        console.log('abrir opciones')
+    const handleClose = () => {
+        sessionStorage.clear()
+        console.log('limpiando cache')
     }
+
     return (
         <div className="body">
             <div className="header">
@@ -22,12 +23,12 @@ const Header = (props) => {
                     <Link className="btn" to="/storeApp">Tienda</Link>
                 </div>
                 <div className="containerOptions">
-                    <Link className="btn" to="/">Salir</Link>
+                    <Link className="btn" to="/" onClick={handleClose}>Salir</Link>
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 
-export default Header;
+export default Header

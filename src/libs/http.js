@@ -41,8 +41,7 @@ class Http {
                 },
                 body: JSON.stringify(body)
             }
-
-            fetchWithTimeout(this.server + url, options, this.timeOut)
+            fetch(this.server + url, options)
                 .then(async (response) => {
                     let json = await response.json()
                     resolve(json)
@@ -104,7 +103,6 @@ class Http {
                     'Content-Type': 'application/json',
                     'token': '4C79A286C3ADE40D27696F617F94D646B7A38236FF385DF962EFAA9755BB2CBD'
                 },
-                body: JSON.stringify(body)
             }
             fetchWithTimeout(this.server + url + "/" + object, options, this.timeOut)
                 .then(async (response) => {

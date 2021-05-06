@@ -1,13 +1,13 @@
-import React from 'react';
-import iconDelete from '../../assets/static/delete.svg';
-import iconEdit from '../../assets/static/edit.svg';
-import '../../assets/styles/components/News.scss';
+import React from 'react'
+import iconDelete from '../../assets/static/delete.svg'
+import iconEdit from '../../assets/static/edit.svg'
+import '../../assets/styles/components/News.scss'
 
-
-const ItemStore = props => {
+const ItemStore = (props) => {
     const click = () => {
         console.log('click')
     }
+
     return (
         <div className="containerItem">
             <p className="title">Titulo Store</p>
@@ -18,7 +18,7 @@ const ItemStore = props => {
                 <img className="imgItem" src={iconDelete} alt="imgDelete" />
             </a>
         </div>
-    );
-};
+    )
+}
 
-export default ItemStore;
+export default ItemStore

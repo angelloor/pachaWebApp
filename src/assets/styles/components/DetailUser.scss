@@ -1,0 +1,351 @@
+.containerHome > .containerDetailUser {
+	width: calc(100% - 60px);
+	display: flex;
+	flex-direction: row;
+	align-self: center;
+	padding: 20px 0px;
+	padding-top: 0px;
+	justify-content: space-between;
+}
+
+//card
+.containerHome > .containerDetailUser > .containerCard {
+	width: 30%;
+}
+
+.containerHome > .containerDetailUser > .containerCard > div {
+	background-color: #3a3a68;
+	border-radius: 10px;
+}
+
+.containerHome > .containerDetailUser > .containerCard > div > .sectionOne {
+	padding-top: 20px;
+	display: flex;
+	flex-direction: row;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerCard
+	> div
+	> .sectionOne
+	> .containerImg {
+	width: 40%;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerCard
+	> div
+	> .sectionOne
+	> .containerImg
+	> img {
+	width: 50%;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerCard
+	> div
+	> .sectionOne
+	> .sectionName {
+	width: 60%;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerCard
+	> div
+	> .sectionOne
+	> .sectionName
+	> p {
+	color: white;
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerCard
+	> div
+	> .sectionOne
+	> .sectionName
+	> .level {
+	font-weight: 700;
+}
+
+.containerHome > .containerDetailUser > .containerCard > div > .sectionTwo {
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.containerHome > .containerDetailUser > .containerCard > div > .sectionTwo > p {
+	color: white;
+	padding-left: 40px;
+	margin-bottom: 10px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerCard
+	> div
+	> .sectionTwo
+	> p
+	> strong {
+	color: #0fae4b;
+}
+
+//containerShopping
+.containerHome > .containerDetailUser > .containerShopping {
+	width: 30%;
+}
+
+.containerHome > .containerDetailUser > .containerShopping > div {
+	width: 100%;
+	background-color: #3a3a68;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.containerHome > .containerDetailUser > .containerShopping > .otherCss {
+	width: 100%;
+	display: block;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+
+.containerHome > .containerDetailUser > .containerShopping > .otherCss > div {
+	text-align: center;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement {
+	width: 90%;
+	background-color: white;
+	border-radius: 10px;
+	margin: 5px;
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+}
+
+//image
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerImg {
+	width: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerImg
+	> img {
+	width: 100%;
+	border-radius: 10px;
+}
+
+//details
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerDetails {
+	width: 65%;
+	padding: 10px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerDetails
+	> p {
+	color: #0fae4b;
+	margin: 0;
+	font-size: 14px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerDetails
+	> .title {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+//options
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerOptions {
+	width: 15%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerOptions
+	> .btnOptions {
+	width: 40px;
+	height: 40px;
+	margin: 2px;
+	background-color: #0fae4b;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerShopping
+	> div
+	> .containerElement
+	> .containerOptions
+	> .btnOptions
+	> img {
+	width: 100%;
+}
+
+//containerComun
+.containerHome > .containerDetailUser > .containerComun {
+	width: 30%;
+}
+
+.containerHome > .containerDetailUser > .containerComun > .otherCss {
+	width: 100%;
+	display: block;
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+
+.containerHome > .containerDetailUser > .containerComun > .otherCss > div {
+	text-align: center;
+}
+
+.containerHome > .containerDetailUser > .containerComun > div {
+	width: 100%;
+	background-color: #3a3a68;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerComun
+	> div
+	> .containerElement {
+	width: 90%;
+	background-color: white;
+	border-radius: 10px;
+	margin: 5px;
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerComun
+	> div
+	> .containerElement
+	> .containerCategory {
+	width: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerComun
+	> div
+	> .containerElement
+	> .containerCategory
+	> img {
+	width: 60%;
+	border-radius: 10px;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerComun
+	> div
+	> .containerElement
+	> .containerTitle {
+	width: 60%;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerComun
+	> div
+	> .containerElement
+	> .containerTitle
+	> p {
+	margin-bottom: 0px;
+	color: #0fae4b;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerComun
+	> div
+	> .containerElement
+	> .containerImg {
+	width: 20%;
+}
+
+.containerHome
+	> .containerDetailUser
+	> .containerComun
+	> div
+	> .containerElement
+	> .containerImg
+	> div
+	> img {
+	width: 100%;
+	border-radius: 10px;
+}

@@ -1,30 +1,29 @@
-import React from 'react';
-import '../../assets/styles/components/Users.scss';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import '../../assets/styles/components/Users.scss'
+import { getLevel } from '../../Utils/index'
 
 const ItemUser = props => {
+    const { names, coint, experience, _id } = props.user
 
-    const event = () => {
-        console.log('open Modal')
-    }
+    const level = getLevel(experience)
 
     return (
         <div className="containerItem">
             <div className="name">
-                <p>Angel Loor</p>
+                <p>{names}</p>
             </div>
             <div className="level">
-                <p>Nivel 10</p>
+                <p>{`Nivel ${level.level}`}</p>
             </div>
             <div className="coint">
-                <p>600</p>
+                <p>{`Ambiental Coint ${coint}`}</p>
             </div>
             <div className="containerBtn">
-                <a className="btn" onClick={event}>Ver</a>
-                <a className="btn" onClick={event}>Ver retos</a>
-                <a className="btn" onClick={event}>Ver compras</a>
+                <Link className="btn" to={`/detailUser/${_id}`}>Ver más</Link>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ItemUser;
+export default ItemUser

@@ -3,13 +3,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { compose, createStore } from 'redux';
+import SimpleReactLightbox from 'simple-react-lightbox';
 import reducer from './reducers';
 import App from './routes/App';
 
 const initialState = {
-  "autor": {
-    nombre: 'Angel Loor'
-  }
+  userLogin: "",
+  users: [],
+  news: [],
+  storeItem: []
 }
 
 // Debugging para Redux en Chrome
@@ -19,7 +21,9 @@ const store = createStore(reducer, initialState, composeEnhancers());
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <SimpleReactLightbox>
+      <App />
+    </SimpleReactLightbox>
   </Provider>,
   document.getElementById('app')
 );
@@ -29,7 +33,9 @@ if (module.hot) {
     console.log('Recargando en caliente')
     ReactDOM.render(
       <Provider store={store}>
-        <App />
+        <SimpleReactLightbox>
+          <App />
+        </SimpleReactLightbox>
       </Provider>,
       document.getElementById('app')
     );

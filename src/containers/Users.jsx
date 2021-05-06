@@ -1,71 +1,95 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import '../assets/styles/BackgroundImage.scss';
-import '../assets/styles/components/Home.scss';
-import '../assets/styles/components/Users.scss';
-import InputSearch from '../components/InputSearch';
-import Layout from '../components/Layout';
-import PageLoading from '../components/PageLoading';
-import ItemUser from '../components/User/ItemUser';
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { Alert } from 'reactstrap'
+import { cambiarUsers } from '../actions/index.js'
+import noAutorizado from '../assets/static/noAutorizado.svg'
+import '../assets/styles/BackgroundImage.scss'
+import '../assets/styles/components/Home.scss'
+import '../assets/styles/components/Users.scss'
+import '../assets/styles/noFound.scss'
+import InputSearch from '../components/InputSearch'
+import Layout from '../components/Layout'
+import PageLoading from '../components/PageLoading'
+import ItemUser from '../components/User/ItemUser'
+import Http from '../libs/http'
 
 const Users = (props) => {
-    const loading = false
+    const username = sessionStorage.getItem('username')
+
+    const [loading, setLoading] = useState(false)
+    const [users, setUsers] = useState([])
+    const [query, setQuery] = useState('')
+
+    const filterUsers = users.filter((user) => {
+        return user.names.toLowerCase().includes(query)
+    })
+
+    useEffect(async () => {
+        await getUsers()
+    }, [])
+
+    const getUsers = async () => {
+        setLoading(true)
+        Http.instance.get('/webApp/listUsers')
+            .then(response => {
+                setLoading(false)
+                props.cambiarUsers(response.body)
+                setUsers(response.body)
+
+            })
+            .catch((error) => {
+                setLoading(false)
+                console.log(error)
+            })
+    }
+
     return (
-        <div className="containerHome">
-            <Layout>
-                {(loading) ? <PageLoading /> :
-                    <>
-                        <div className="titleSection">
-                            <p>Inicio /</p>
-                            <p className="title">Usuarios</p>
-                        </div>
-                        <InputSearch />
-                        <div className="containerItemUser">
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                            <ItemUser />
-                        </div>
-                    </>}
-            </Layout>
-        </div>
+        <>
+            {(username)
+                ?
+                <div className="containerHome">
+                    <Layout>
+                        {(loading) ? <PageLoading /> :
+                            <>
+                                <div className="titleSection">
+                                    <p>Inicio /</p>
+                                    <p className="title">Usuarios</p>
+                                </div>
+                                <InputSearch query={query} setQuery={setQuery} />
+                                <div className="containerItemUser">
+                                    {(filterUsers.length != 0)
+                                        ?
+                                        filterUsers.map(user =>
+                                            <ItemUser key={user._id} user={user} />
+                                        )
+                                        :
+                                        <Alert color="success">No se ha encontrado resultados</Alert>
+                                    }
+                                </div>
+                            </>}
+                    </Layout>
+                </div>
+                :
+                <>
+                    <div className="containerNofount display">
+                        <img src={noAutorizado} alt="No Fount" width="250px" />
+                        <Link to="/">Iniciar sesión</Link>
+                    </div>
+                </>
+            }
+        </>
     )
+}
+
+const mapDispatchToProps = {
+    cambiarUsers
 }
 
 const mapStateToProps = state => {
     return {
-        autor: state.autor,
-    };
-};
+        users: state.users,
+    }
+}
 
-export default connect(mapStateToProps, null)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

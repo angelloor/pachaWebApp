@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Spinner } from 'reactstrap';
-import Logo from '../assets/static/iso.png';
-import '../assets/styles/Background.scss';
-import '../assets/styles/components/Login.scss';
-import SimpleModal from '../components/SimpleModal';
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { cambiarUserLogin } from '../actions/index.js'
+import Logo from '../assets/static/iso.png'
+import '../assets/styles/Background.scss'
+import '../assets/styles/components/Login.scss'
+import SimpleModal from '../components/SimpleModal'
+import Http from '../libs/http'
 
-const Login = props => {
-    const [loading, setLoading] = useState(false)
-
+const Login = (props) => {
     const [username, setUsename] = useState('')
     const [password, setPassword] = useState('')
     const [modal, setModal] = useState(false)
@@ -35,32 +35,35 @@ const Login = props => {
         setPassword(e.target.value)
     }
 
-    const handleSubmit = (e) => {
-        props.history.push("/homeApp")
+    const handleSubmit = async (e) => {
+        if (!username) {
+            openModal('', 'Ingese el usuario')
+            return
+        }
 
-        // if (!username) {
-        //     openModal('Validaciones', 'Ingese el usuario')
-        //     return
-        // }
+        if (!password) {
+            openModal('', 'Ingese la contraseña')
+            return
+        }
 
-        // if (!password) {
-        //     openModal('Validaciones', 'Ingese la contraseña')
-        //     return
-        // }
+        const body = {
+            username,
+            password
+        }
 
-        // const body = {
-        //     username,
-        //     password
-        // }
-        // setLoading(true)
-        // Http.instance.post('/userApp/login', body)
-        //     .then((response) => {
-        //         console.log(response)
-        //         props.history.push("/homeApp")
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
+        Http.instance.post('/webApp/login', body)
+            .then((response) => {
+                if (response.body != 'Ok') {
+                    openModal('', response.error)
+                } else {
+                    props.cambiarUserLogin(username)
+                    sessionStorage.setItem('username', username)
+                    props.history.push("/homeApp")
+                }
+            })
+            .catch((error) => {
+                openModal('', error)
+            })
     }
 
     return (
@@ -82,19 +85,14 @@ const Login = props => {
                     <div className="containerInputBtn">
                         <input className="btnSubmit" type="submit" name="submit" value="Entrar" onClick={handleSubmit} />
                     </div>
-                    {(loading) ?
-                        <Spinner color="success" />
-                        :
-                        <></>
-                    }
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-Login.propTypes = {
+const mapDispatchToProps = {
+    cambiarUserLogin,
+}
 
-};
-
-export default Login;
+export default connect(null, mapDispatchToProps)(Login)

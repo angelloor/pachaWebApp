@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import DetailUser from '../containers/DetailUser';
 import Home from '../containers/Home';
 import Login from '../containers/Login';
 import News from '../containers/News';
@@ -15,6 +16,7 @@ const App = () => (
       <Route exact path="/usersApp" component={Users} />
       <Route exact path="/newsApp" component={News} />
       <Route exact path="/storeApp" component={Store} />
+      <Route exact path="/detailUser/:id" component={DetailUser} />
       <Route component={NotFount} />
     </Switch>
   </BrowserRouter>

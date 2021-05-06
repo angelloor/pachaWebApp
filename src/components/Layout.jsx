@@ -1,5 +1,5 @@
-import React from 'react';
-import Header from './Header';
+import React from 'react'
+import Header from './Header'
 
 const Layout = (props) => {
     const { children } = props
@@ -8,7 +8,7 @@ const Layout = (props) => {
             <Header />
             {children}
         </React.Fragment>
-    );
+    )
 }
 
-export default Layout;
+export default Layout
