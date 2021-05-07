@@ -21,6 +21,8 @@ const News = (props) => {
 
     useEffect(() => {
         getNews()
+        sessionStorage.removeItem('option')
+        sessionStorage.removeItem('itemSelect')
     }, [])
 
     //selectores
@@ -119,12 +121,12 @@ const News = (props) => {
     }
 
     const handleDelete = (id) => {
-        openModalConfirm('', 'estas seguro de elimar?', 1, id)
+        openModalConfirm('', '¿Estás seguro de eliminar la noticia?', 1, id)
     }
 
     const handleUpdate = (id) => {
         sessionStorage.setItem('option', 'actualizar')
-        openModalConfirm('', 'estas seguro de actualizar?', 2, id)
+        openModalConfirm('', '¿Estás seguro de actualizar la noticia?', 2, id)
     }
 
     const clearStatus = () => {
@@ -149,28 +151,28 @@ const News = (props) => {
 
         if (option != 'actualizar') {
             if (!selectedFile) {
-                openModal('', 'Tienes que seleccionar una foto de la noticia')
+                openModal('', 'Tienes que seleccionar una foto para la noticia')
                 return
             }
         }
 
         if (!title) {
-            openModal('', 'Tienes que ingresar el titulo de la noticia')
+            openModal('', 'Tienes que ingresar el título para la noticia')
             return
         }
 
         if (!description) {
-            openModal('', 'Tienes que ingresar la descripcion de la noticia de la noticia')
+            openModal('', 'Tienes que ingresar la descripción para la noticia')
             return
         }
 
         if (!nameBtn) {
-            openModal('', 'Tienes que ingresar el nombre de boton de la noticia')
+            openModal('', 'Tienes que ingresar el nombre del botón para la noticia')
             return
         }
 
         if (!url) {
-            openModal('', 'Tienes que ingresar la url de la noticia')
+            openModal('', 'Tienes que ingresar la URL (link) de la noticia')
             return
         }
 
@@ -189,7 +191,7 @@ const News = (props) => {
                 Http.instance.postFormData('/webApp/saveCImage', formData)
                     .then((response) => {
                         if (response.body) {
-                            openModal('', 'Noticia actualizada correctamente')
+                            openModal('', '¡Noticia actualizada correctamente!')
                         }
                         getNews()
                     })
@@ -208,7 +210,7 @@ const News = (props) => {
                 Http.instance.post('/webApp/saveSImage', body)
                     .then((response) => {
                         if (response.body) {
-                            openModal('', 'Noticia actualizada correctamente')
+                            openModal('', '¡Noticia actualizada correctamente!')
                         }
                         getNews()
                     })
@@ -228,7 +230,7 @@ const News = (props) => {
             Http.instance.postFormData('/webApp/saveImageNew', formData)
                 .then((response) => {
                     if (response.body) {
-                        openModal('', 'Noticia agregada correctamente')
+                        openModal('', '¡Noticia agregada correctamente!')
                     }
                     getNews()
                 })
@@ -244,7 +246,7 @@ const News = (props) => {
             Http.instance.delete(`/news`, itemSelect)
                 .then((response) => {
                     if (response.body) {
-                        openModal('', 'Noticia Eliminada')
+                        openModal('', '¡Noticia Eliminada!')
                         clearStatus()
                     }
                     getNews()
@@ -300,16 +302,16 @@ const News = (props) => {
                                         <input type="file" name="photo" id="upload-photo" onChange={handleChangeImage} />
                                     </div>
                                     <div className="containerInputBox">
-                                        <input className="input" type="text" id="title" placeholder="Titulo" onChange={handleChangeTitle} />
+                                        <input className="input" type="text" id="title" placeholder="Título (Recomendación máximo 15 palabras)" onChange={handleChangeTitle} />
                                     </div>
                                     <div className="containerInputBox area">
-                                        <textarea className="input" name="" id="description" cols="30" rows="10" placeholder="Descripcion" onChange={handleChangeDescription}></textarea>
+                                        <textarea className="input" name="" id="description" cols="30" rows="10" placeholder="Descripción (Recomendación máximo 120 palabras)" onChange={handleChangeDescription}></textarea>
                                     </div>
                                     <div className="containerInputBox">
-                                        <input className="input" type="text" id="nameBtn" placeholder="Nombre Boton" onChange={handleChangeNameBtn} />
+                                        <input className="input" type="text" id="nameBtn" placeholder="Nombre del botón (Recomendación máximo 3 palabras)" onChange={handleChangeNameBtn} />
                                     </div>
                                     <div className="containerInputBox">
-                                        <input className="input" type="text" id="link" placeholder="Url" onChange={handleChangeUrl} />
+                                        <input className="input" type="text" id="link" placeholder="URL de la noticia (Comprobar Url)" onChange={handleChangeUrl} />
                                     </div>
                                     <div className="containerBtns">
                                         <a className="btn" onClick={clearStatus}>Cancelar</a>

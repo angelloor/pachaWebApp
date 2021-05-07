@@ -10,7 +10,7 @@ const TopicItem = ({ item }) => {
         <>
             <div className="containerElement">
                 <div className="containerCategory">
-                    <img src={urlImgCategory} alt="imagen de categoria" />
+                    <img src={urlImgCategory} alt="imagen de categoría" />
                 </div>
                 <div className="containerTitle">
                     <p>{name}</p>

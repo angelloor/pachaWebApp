@@ -4,6 +4,7 @@ import iconRetun from '../../assets/static/return.svg'
 import Http from '../../libs/http'
 
 const YourShoppingItem = ({ handleDelivery, handleReturnDelivery, index, item }) => {
+    console.log(item)
     const { itemId, deliveryStatus, deliveryDate, shoppingDate, _id } = item
     const url = itemId.urlImage
     const urlResource = `${Http.instance.server}${url}`
@@ -12,7 +13,7 @@ const YourShoppingItem = ({ handleDelivery, handleReturnDelivery, index, item })
         <>
             <div className="containerElement">
                 <div className="containerImg">
-                    <img src={urlResource} alt="imagen item de la tienda" />
+                    <img src={urlResource} alt="imagen del item de la tienda" />
                 </div>
                 <div className="containerDetails">
                     <p className="title">{itemId.title}</p>

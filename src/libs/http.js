@@ -102,7 +102,7 @@ class Http {
                     'Accept': '*/*',
                     'Content-Type': 'application/json',
                     'token': '4C79A286C3ADE40D27696F617F94D646B7A38236FF385DF962EFAA9755BB2CBD'
-                },
+                }
             }
             fetchWithTimeout(this.server + url + "/" + object, options, this.timeOut)
                 .then(async (response) => {

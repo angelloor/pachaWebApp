@@ -21,6 +21,8 @@ const Store = (props) => {
 
     useEffect(() => {
         getStoreItem()
+        sessionStorage.removeItem('option')
+        sessionStorage.removeItem('itemSelect')
     }, [])
 
     //selectores
@@ -47,8 +49,6 @@ const Store = (props) => {
     const [textConfirm, setTextConfirm] = useState('')
     const [select, setSelect] = useState(0)
     const [itemSelect, setItemSelect] = useState('')
-
-
 
     //funciones
     const getStoreItem = () => {
@@ -116,12 +116,12 @@ const Store = (props) => {
 
 
     const handleDelete = (id) => {
-        openModalConfirm('', 'estas seguro de elimar?', 1, id)
+        openModalConfirm('', '¿Estás seguro de eliminar el ítem de la tienda?', 1, id)
     }
 
     const handleUpdate = (id) => {
         sessionStorage.setItem('option', 'actualizar')
-        openModalConfirm('', 'estas seguro de actualizar?', 2, id)
+        openModalConfirm('', '¿Estás seguro de actualizar el ítem de la tienda?', 2, id)
     }
 
     const clearStatus = () => {
@@ -146,23 +146,23 @@ const Store = (props) => {
 
         if (option != 'actualizar') {
             if (!selectedFile) {
-                openModal('', 'Tienes que seleccionar una foto para el item')
+                openModal('', 'Tienes que seleccionar una foto para el ítem de la tienda')
                 return
             }
         }
 
         if (!name) {
-            openModal('', 'Tienes que ingresar el nombre del item')
+            openModal('', 'Tienes que ingresar el nombre para el ítem de la tienda')
             return
         }
 
         if (!description) {
-            openModal('', 'Tienes que ingresar la descripcion del item')
+            openModal('', 'Tienes que ingresar la descripción para el ítem de la tienda')
             return
         }
 
         if (!price) {
-            openModal('', 'Tienes que ingresar el precio del item')
+            openModal('', 'Tienes que ingresar el precio para el ítem de la tienda')
             return
         }
 
@@ -179,7 +179,7 @@ const Store = (props) => {
                 Http.instance.postFormData('/webApp/saveCImageStoreItem', formData)
                     .then((response) => {
                         if (response.body) {
-                            openModal('', 'Item actualizado correctamente')
+                            openModal('', 'Ítem de la tienda actualizado correctamente')
                         }
                         getStoreItem()
                     })
@@ -194,10 +194,11 @@ const Store = (props) => {
                     price,
                     id: iSelect,
                 }
+
                 Http.instance.post('/webApp/saveSImageStoreItem', body)
                     .then((response) => {
                         if (response.body) {
-                            openModal('', 'Noticia actualizada correctamente')
+                            openModal('', 'Ítem de la tienda actualizado correctamente')
                         }
                         getStoreItem()
                     })
@@ -218,7 +219,7 @@ const Store = (props) => {
             Http.instance.postFormData('/webApp/saveImageStoreItem', formData)
                 .then((response) => {
                     if (response.body) {
-                        openModal('', 'Item agregado correctamente')
+                        openModal('', 'Ítem de la tienda agregado correctamente')
                     }
                     getStoreItem()
                 })
@@ -234,7 +235,7 @@ const Store = (props) => {
             Http.instance.delete(`/storeItem`, itemSelect)
                 .then((response) => {
                     if (response.body) {
-                        openModal('', 'Item Eliminado Eliminada')
+                        openModal('', response.body)
                         clearStatus()
                     }
                     getStoreItem()
@@ -280,20 +281,20 @@ const Store = (props) => {
                             <div className="containerCard">
                                 <div className="containerElement">
                                     <div className="containerImg">
-                                        <img src={newImg} alt="Imagen de noticia" id="imagePreviewStore" />
+                                        <img src={newImg} alt="Imagen de Item" id="imagePreviewStore" />
                                         <label htmlFor="upload-photo">
                                             <img src={iconCamera} alt="imgCamera" />
                                         </label>
                                         <input type="file" name="photo" id="upload-photo" onChange={handleChangeImage} />
                                     </div>
                                     <div className="containerInputBox">
-                                        <input className="input" id="name" type="text" placeholder="Nombre" onChange={handleName} />
+                                        <input className="input" id="name" type="text" placeholder="Nombre (Recomendación máximo 5 palabras)" onChange={handleName} />
                                     </div>
                                     <div className="containerInputBox area">
-                                        <textarea className="input" id="description" cols="30" rows="10" placeholder="Descripcion" onChange={handleDescription}></textarea>
+                                        <textarea className="input" id="description" cols="30" rows="10" placeholder="Descripción (Recomendación máximo 15 palabras)" onChange={handleDescription}></textarea>
                                     </div>
                                     <div className="containerInputBox">
-                                        <input className="input" id="price" type="number" placeholder="Precio" onChange={handlePrice} />
+                                        <input className="input" id="price" type="number" placeholder="Precio (Proporcional a las recompensas de las clases o retos)" onChange={handlePrice} />
                                     </div>
                                     <div className="containerBtns">
                                         <a className="btn" onClick={clearStatus}>Cancelar</a>

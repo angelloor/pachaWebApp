@@ -14,13 +14,13 @@ const NotFount = () => {
         ?
         <>
           <div className="containerNofount">
-            <img src={NotFounts} alt="No Fount" width="500px" />
+            <img src={NotFounts} alt="Imagen no se encontro la página" width="500px" />
           </div>
         </>
         :
         <>
           <div className="containerNofount display">
-            <img src={noAutorizado} alt="No Fount" width="250px" />
+            <img src={noAutorizado} alt="Imagen no autorizado" width="250px" />
             <Link to="/">Iniciar sesión</Link>
           </div>
         </>

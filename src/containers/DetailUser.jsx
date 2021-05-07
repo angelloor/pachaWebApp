@@ -70,12 +70,12 @@ const DetailUser = ({ cambiarYourShopping, yourShopping }) => {
 
     const handleDelivery = (id, index) => {
         setIndex(index)
-        openModal('', 'Estas seguro de entregar el premio?', 1, id)
+        openModal('', '¿Estás seguro de entregar el premio?', 1, id)
     }
 
     const handleReturnDelivery = (id, index) => {
         setIndex(index)
-        openModal('', 'Estas seguro retornar el premio?', 2, id)
+        openModal('', '¿Estás seguro retornar el premio?', 2, id)
     }
 
     const changeStateYourShopping = (id) => {
