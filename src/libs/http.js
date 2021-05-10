@@ -2,8 +2,8 @@ import fetchWithTimeout from './fetchWithTimeout'
 
 class Http {
     constructor() {
-        // this.server = "https://pachaappec.com:443"
-        this.server = "http://localhost:5000"
+        this.server = "https://pachaappec.com:443"
+        // this.server = "http://localhost:5000"
         this.timeOut = 7000
     }
 

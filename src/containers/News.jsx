@@ -13,6 +13,7 @@ import InputSearch from '../components/InputSearch'
 import Layout from '../components/Layout'
 import ModalConfirm from '../components/ModalConfirm'
 import ItemNews from '../components/New/ItemNews'
+import PageLoading from '../components/PageLoading'
 import SimpleModal from '../components/SimpleModal'
 import Http from '../libs/http'
 
@@ -34,6 +35,7 @@ const News = (props) => {
     const slink = document.getElementById('link')
 
     //estado
+    const [loading, setLoading] = useState(false)
     const [news, setNews] = useState([])
     const [query, setQuery] = useState('')
     //inputs
@@ -54,11 +56,14 @@ const News = (props) => {
 
     //function
     const getNews = () => {
+        setLoading(true)
         Http.instance.get('/news')
             .then((response) => {
+                setLoading(false)
                 setNews(response.body)
             })
             .catch((err) => {
+                setLoading(false)
                 console.log(err)
             })
     }
@@ -188,6 +193,7 @@ const News = (props) => {
             if (selectedFile) {
                 formData.append('image', selectedFile)
 
+                setLoading(true)
                 Http.instance.postFormData('/webApp/saveCImage', formData)
                     .then((response) => {
                         if (response.body) {
@@ -196,6 +202,7 @@ const News = (props) => {
                         getNews()
                     })
                     .catch((err) => {
+                        setLoading(false)
                         console.log(err)
                     })
 
@@ -207,6 +214,7 @@ const News = (props) => {
                     url,
                     id: iSelect,
                 }
+                setLoading(true)
                 Http.instance.post('/webApp/saveSImage', body)
                     .then((response) => {
                         if (response.body) {
@@ -215,6 +223,7 @@ const News = (props) => {
                         getNews()
                     })
                     .catch((err) => {
+                        setLoading(false)
                         console.log(err)
                     })
             }
@@ -227,6 +236,7 @@ const News = (props) => {
             formData.append('nameBtn', nameBtn)
             formData.append('url', url)
 
+            setLoading(true)
             Http.instance.postFormData('/webApp/saveImageNew', formData)
                 .then((response) => {
                     if (response.body) {
@@ -235,6 +245,7 @@ const News = (props) => {
                     getNews()
                 })
                 .catch((err) => {
+                    setLoading(false)
                     console.log(err)
                 })
         }
@@ -255,6 +266,7 @@ const News = (props) => {
                     console.log(err)
                 })
         } else {
+            setLoading(true)
             Http.instance.get(`/news?idNews=${itemSelect}`)
                 .then((response) => {
                     stitle.value = response.body[0].title
@@ -275,6 +287,8 @@ const News = (props) => {
                 .catch((err) => {
                     console.log(err)
                 })
+            setLoading(false)
+
         }
         closeModalConfirm()
     }
@@ -285,55 +299,57 @@ const News = (props) => {
                 ?
                 <div className="containerHome">
                     <Layout>
-                        <SimpleModal modal={modal} title={titleModal} text={text} toggle={closeModal} />
-                        <ModalConfirm modal={modalConfirm} title={titleConfirm} text={textConfirm} toggle={closeModalConfirm} confirm={confirm} select={select} />
-                        <div className="titleSection">
-                            <p>Inicio / </p>
-                            <p className="title">Noticias</p>
-                        </div>
-                        <div className="containerNews">
-                            <div className="containerCard">
-                                <div className="containerElement">
-                                    <div className="containerImg">
-                                        <img src={newImg} alt="Imagen de noticia" id="imagePreview" />
-                                        <label htmlFor="upload-photo">
-                                            <img src={iconCamera} alt="imgCamera" />
-                                        </label>
-                                        <input type="file" name="photo" id="upload-photo" onChange={handleChangeImage} />
+                        {(loading) ? <PageLoading /> : <>
+                            <SimpleModal modal={modal} title={titleModal} text={text} toggle={closeModal} />
+                            <ModalConfirm modal={modalConfirm} title={titleConfirm} text={textConfirm} toggle={closeModalConfirm} confirm={confirm} select={select} />
+                            <div className="titleSection">
+                                <p>Inicio / </p>
+                                <p className="title">Noticias</p>
+                            </div>
+                            <div className="containerNews">
+                                <div className="containerCard">
+                                    <div className="containerElement">
+                                        <div className="containerImg">
+                                            <img src={newImg} alt="Imagen de noticia" id="imagePreview" />
+                                            <label htmlFor="upload-photo">
+                                                <img src={iconCamera} alt="imgCamera" />
+                                            </label>
+                                            <input type="file" name="photo" id="upload-photo" onChange={handleChangeImage} />
+                                        </div>
+                                        <div className="containerInputBox">
+                                            <input className="input" type="text" id="title" placeholder="Título (Recomendación máximo 15 palabras)" onChange={handleChangeTitle} />
+                                        </div>
+                                        <div className="containerInputBox area">
+                                            <textarea className="input" name="" id="description" cols="30" rows="10" placeholder="Descripción (Recomendación máximo 120 palabras)" onChange={handleChangeDescription}></textarea>
+                                        </div>
+                                        <div className="containerInputBox">
+                                            <input className="input" type="text" id="nameBtn" placeholder="Nombre del botón (Recomendación máximo 3 palabras)" onChange={handleChangeNameBtn} />
+                                        </div>
+                                        <div className="containerInputBox">
+                                            <input className="input" type="text" id="link" placeholder="URL de la noticia (Comprobar Url)" onChange={handleChangeUrl} />
+                                        </div>
+                                        <div className="containerBtns">
+                                            <a className="btn" onClick={clearStatus}>Cancelar</a>
+                                            <a className="btn" onClick={handleSubmit}>Guardar</a>
+                                        </div>
                                     </div>
-                                    <div className="containerInputBox">
-                                        <input className="input" type="text" id="title" placeholder="Título (Recomendación máximo 15 palabras)" onChange={handleChangeTitle} />
-                                    </div>
-                                    <div className="containerInputBox area">
-                                        <textarea className="input" name="" id="description" cols="30" rows="10" placeholder="Descripción (Recomendación máximo 120 palabras)" onChange={handleChangeDescription}></textarea>
-                                    </div>
-                                    <div className="containerInputBox">
-                                        <input className="input" type="text" id="nameBtn" placeholder="Nombre del botón (Recomendación máximo 3 palabras)" onChange={handleChangeNameBtn} />
-                                    </div>
-                                    <div className="containerInputBox">
-                                        <input className="input" type="text" id="link" placeholder="URL de la noticia (Comprobar Url)" onChange={handleChangeUrl} />
-                                    </div>
-                                    <div className="containerBtns">
-                                        <a className="btn" onClick={clearStatus}>Cancelar</a>
-                                        <a className="btn" onClick={handleSubmit}>Guardar</a>
+                                </div>
+                                <div className="containerItems">
+                                    <InputSearch query={query} setQuery={setQuery} />
+                                    <div className="containerI">
+                                        {
+                                            (filterNews.length != 0)
+                                                ?
+                                                filterNews.map((item) =>
+                                                    <ItemNews key={item._id} item={item} handleDelete={handleDelete} handleUpdate={handleUpdate} />
+                                                )
+                                                :
+                                                <Alert color="success">No se ha encontrado resultados</Alert>
+                                        }
                                     </div>
                                 </div>
                             </div>
-                            <div className="containerItems">
-                                <InputSearch query={query} setQuery={setQuery} />
-                                <div className="containerI">
-                                    {
-                                        (filterNews.length != 0)
-                                            ?
-                                            filterNews.map((item) =>
-                                                <ItemNews key={item._id} item={item} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                                            )
-                                            :
-                                            <Alert color="success">No se ha encontrado resultados</Alert>
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                        </>}
                     </Layout>
                 </div>
                 :

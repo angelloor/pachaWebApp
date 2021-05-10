@@ -12,6 +12,7 @@ import '../assets/styles/noFound.scss'
 import InputSearch from '../components/InputSearch'
 import Layout from '../components/Layout'
 import ModalConfirm from '../components/ModalConfirm'
+import PageLoading from '../components/PageLoading'
 import SimpleModal from '../components/SimpleModal'
 import ItemStore from '../components/Store/ItemStore'
 import Http from '../libs/http'
@@ -33,6 +34,7 @@ const Store = (props) => {
     const sprice = document.getElementById('price')
 
     //estado
+    const [loading, setLoading] = useState(false)
     const [query, setQuery] = useState('')
     const [storeItem, setStoreItem] = useState([])
     //inputs
@@ -52,11 +54,14 @@ const Store = (props) => {
 
     //funciones
     const getStoreItem = () => {
+        setLoading(true)
         Http.instance.get('/storeItem')
             .then((response) => {
+                setLoading(false)
                 setStoreItem(response.body)
             })
             .catch((err) => {
+                setLoading(false)
                 console.log(err)
             })
     }
@@ -176,6 +181,7 @@ const Store = (props) => {
                 formData.append('id', iSelect)
                 formData.append('image', selectedFile)
 
+                setLoading(true)
                 Http.instance.postFormData('/webApp/saveCImageStoreItem', formData)
                     .then((response) => {
                         if (response.body) {
@@ -184,6 +190,7 @@ const Store = (props) => {
                         getStoreItem()
                     })
                     .catch((err) => {
+                        setLoading(false)
                         console.log(err)
                     })
 
@@ -195,6 +202,7 @@ const Store = (props) => {
                     id: iSelect,
                 }
 
+                setLoading(true)
                 Http.instance.post('/webApp/saveSImageStoreItem', body)
                     .then((response) => {
                         if (response.body) {
@@ -203,6 +211,7 @@ const Store = (props) => {
                         getStoreItem()
                     })
                     .catch((err) => {
+                        setLoading(false)
                         console.log(err)
                     })
             }
@@ -216,6 +225,7 @@ const Store = (props) => {
             formData.append('description', description)
             formData.append('price', price)
 
+            setLoading(true)
             Http.instance.postFormData('/webApp/saveImageStoreItem', formData)
                 .then((response) => {
                     if (response.body) {
@@ -224,6 +234,7 @@ const Store = (props) => {
                     getStoreItem()
                 })
                 .catch((err) => {
+                    setLoading(false)
                     console.log(err)
                 })
         }
@@ -244,6 +255,7 @@ const Store = (props) => {
                     console.log(err)
                 })
         } else {
+            setLoading(true)
             Http.instance.get(`/storeItem?idStoreItem=${itemSelect}`)
                 .then((response) => {
                     sname.value = response.body[0].title
@@ -261,6 +273,7 @@ const Store = (props) => {
                 .catch((err) => {
                     console.log(err)
                 })
+            setLoading(false)
         }
         closeModalConfirm()
     }
@@ -271,52 +284,56 @@ const Store = (props) => {
                 ?
                 <div className="containerHome">
                     <Layout>
-                        <SimpleModal modal={modal} title={titleModal} text={text} toggle={closeModal} />
-                        <ModalConfirm modal={modalConfirm} title={titleConfirm} text={textConfirm} toggle={closeModalConfirm} confirm={confirm} select={select} />
-                        <div className="titleSection">
-                            <p>Inicio / </p>
-                            <p className="title">Tienda</p>
-                        </div>
-                        <div className="containerNews">
-                            <div className="containerCard">
-                                <div className="containerElement">
-                                    <div className="containerImg">
-                                        <img src={newImg} alt="Imagen de Item" id="imagePreviewStore" />
-                                        <label htmlFor="upload-photo">
-                                            <img src={iconCamera} alt="imgCamera" />
-                                        </label>
-                                        <input type="file" name="photo" id="upload-photo" onChange={handleChangeImage} />
+                        {(loading) ? <PageLoading /> :
+                            <>
+                                <SimpleModal modal={modal} title={titleModal} text={text} toggle={closeModal} />
+                                <ModalConfirm modal={modalConfirm} title={titleConfirm} text={textConfirm} toggle={closeModalConfirm} confirm={confirm} select={select} />
+                                <div className="titleSection">
+                                    <p>Inicio / </p>
+                                    <p className="title">Tienda</p>
+                                </div>
+                                <div className="containerNews">
+                                    <div className="containerCard">
+                                        <div className="containerElement">
+                                            <div className="containerImg">
+                                                <img src={newImg} alt="Imagen de Item" id="imagePreviewStore" />
+                                                <label htmlFor="upload-photo">
+                                                    <img src={iconCamera} alt="imgCamera" />
+                                                </label>
+                                                <input type="file" name="photo" id="upload-photo" onChange={handleChangeImage} />
+                                            </div>
+                                            <div className="containerInputBox">
+                                                <input className="input" id="name" type="text" placeholder="Nombre (Recomendación máximo 5 palabras)" onChange={handleName} />
+                                            </div>
+                                            <div className="containerInputBox area">
+                                                <textarea className="input" id="description" cols="30" rows="10" placeholder="Descripción (Recomendación máximo 15 palabras)" onChange={handleDescription}></textarea>
+                                            </div>
+                                            <div className="containerInputBox">
+                                                <input className="input" id="price" type="number" placeholder="Precio (Proporcional a las recompensas de las clases o retos)" onChange={handlePrice} />
+                                            </div>
+                                            <div className="containerBtns">
+                                                <a className="btn" onClick={clearStatus}>Cancelar</a>
+                                                <a className="btn" onClick={handleSubmit}>Guardar</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="containerInputBox">
-                                        <input className="input" id="name" type="text" placeholder="Nombre (Recomendación máximo 5 palabras)" onChange={handleName} />
-                                    </div>
-                                    <div className="containerInputBox area">
-                                        <textarea className="input" id="description" cols="30" rows="10" placeholder="Descripción (Recomendación máximo 15 palabras)" onChange={handleDescription}></textarea>
-                                    </div>
-                                    <div className="containerInputBox">
-                                        <input className="input" id="price" type="number" placeholder="Precio (Proporcional a las recompensas de las clases o retos)" onChange={handlePrice} />
-                                    </div>
-                                    <div className="containerBtns">
-                                        <a className="btn" onClick={clearStatus}>Cancelar</a>
-                                        <a className="btn" onClick={handleSubmit}>Guardar</a>
+                                    <div className="containerItems">
+                                        <InputSearch query={query} setQuery={setQuery} />
+                                        <div className="containerI">
+                                            {
+                                                (filterStoreItem.length != 0)
+                                                    ?
+                                                    filterStoreItem.map((item) =>
+                                                        <ItemStore key={item._id} item={item} handleDelete={handleDelete} handleUpdate={handleUpdate} />
+                                                    )
+                                                    :
+                                                    <Alert color="success">No se ha encontrado resultados</Alert>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="containerItems">
-                                <InputSearch query={query} setQuery={setQuery} />
-                                <div className="containerI">
-                                    {
-                                        (filterStoreItem.length != 0)
-                                            ?
-                                            filterStoreItem.map((item) =>
-                                                <ItemStore key={item._id} item={item} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                                            )
-                                            :
-                                            <Alert color="success">No se ha encontrado resultados</Alert>
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                            </>
+                        }
                     </Layout>
                 </div>
                 :

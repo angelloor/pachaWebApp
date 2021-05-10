@@ -3,8 +3,7 @@ import iconOk from '../../assets/static/ok.svg'
 import iconRetun from '../../assets/static/return.svg'
 import Http from '../../libs/http'
 
-const YourShoppingItem = ({ handleDelivery, handleReturnDelivery, index, item }) => {
-    console.log(item)
+const YourShoppingItem = ({ handleDelivery, handleReturnDelivery, index, item, change }) => {
     const { itemId, deliveryStatus, deliveryDate, shoppingDate, _id } = item
     const url = itemId.urlImage
     const urlResource = `${Http.instance.server}${url}`

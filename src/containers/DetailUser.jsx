@@ -11,6 +11,7 @@ import '../assets/styles/components/Home.scss'
 import '../assets/styles/noFound.scss'
 import Layout from '../components/Layout'
 import ModalConfirm from '../components/ModalConfirm'
+import PageLoading from '../components/PageLoading'
 import CardUser from '../components/User/CardUser'
 import ChallengueItem from '../components/User/ChallengueItem'
 import TopicItem from '../components/User/TopicItem'
@@ -18,15 +19,19 @@ import YourShoppingItem from '../components/User/YourShoppingItem'
 import Http from '../libs/http'
 import { getDate } from '../utils/otherUtils.js'
 
+
 const DetailUser = ({ cambiarYourShopping, yourShopping }) => {
     const username = sessionStorage.getItem('username')
     let { id } = useParams()
 
     useEffect(() => {
         getData(id)
-    }, [])
+        console.log('actualizando');
+    }, [loading])
 
     //estado
+    const [change, setChange] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [user, setUser] = useState({})
     const [content, setContent] = useState([])
     //modal
@@ -40,13 +45,16 @@ const DetailUser = ({ cambiarYourShopping, yourShopping }) => {
 
     //function
     const getData = (id) => {
+        setLoading(true)
         Http.instance.post('/webApp/getData', { _id: id })
             .then(response => {
+                setLoading(false)
                 setUser(response.body.user)
                 cambiarYourShopping(response.body.yourShopping)
                 setContent(response.body.content)
             })
             .catch(err => {
+                setLoading(false)
                 console.log(err)
             })
     }
@@ -98,21 +106,29 @@ const DetailUser = ({ cambiarYourShopping, yourShopping }) => {
             itemBuy: itemSelect
         }
         if (select == 1) {
+            setLoading(true)
             Http.instance.post('/webApp/delivery', body)
                 .then(() => {
+                    setLoading(false)
                     let newArray = changeStateYourShopping(itemSelect)
                     cambiarYourShopping(newArray)
+                    setChange(!change)
                 })
                 .catch((err) => {
+                    setLoading(false)
                     console.log(err)
                 })
         } else {
+            setLoading(true)
             Http.instance.post('/webApp/returnDelivery', body)
                 .then((response) => {
+                    setLoading(false)
                     let newArray = changeStateYourShopping(itemSelect)
                     cambiarYourShopping(newArray)
+                    setChange(!change)
                 })
                 .catch((err) => {
+                    setLoading(false)
                     console.log(err)
                 })
         }
@@ -125,50 +141,51 @@ const DetailUser = ({ cambiarYourShopping, yourShopping }) => {
                 ?
                 <div className="containerHome">
                     <Layout>
-                        <ModalConfirm modal={modal} title={title} text={text} toggle={closeModal} confirm={confirm} select={select} />
-                        <div className="titleSection">
-                            <p>Inicio / </p>
-                            <p className="title">Detalle de usuario</p>
-                        </div>
-                        <div className="containerDetailUser">
-                            <div className="containerCard">
-                                <div>
-                                    <CardUser user={user} />
-                                </div>
+                        {(loading) ? <PageLoading /> : <>
+                            <ModalConfirm modal={modal} title={title} text={text} toggle={closeModal} confirm={confirm} select={select} />
+                            <div className="titleSection">
+                                <p>Inicio / </p>
+                                <p className="title">Detalle de usuario</p>
                             </div>
-                            <div className="containerShopping">
-                                <div className={(yourShopping.length == 0 ? 'otherCss' : '')}>
-                                    {(yourShopping.length == 0) ?
-                                        <Alert color="success">No tiene compras aún</Alert>
+                            <div className="containerDetailUser">
+                                <div className="containerCard">
+                                    <div>
+                                        <CardUser user={user} />
+                                    </div>
+                                </div>
+                                <div className="containerShopping">
+                                    <div className={(yourShopping.length == 0 ? 'otherCss' : '')}>
+                                        {(yourShopping.length == 0) ?
+                                            <Alert color="success">No tiene compras aún</Alert>
+                                            :
+                                            yourShopping.map((item, index) => <YourShoppingItem key={item._id} item={item} index={index} handleDelivery={handleDelivery} handleReturnDelivery={handleReturnDelivery} change={change} />)
+                                        }
+                                    </div>
+                                </div>
+                                <div className="containerComun">
+                                    {(user.age < 15)
+                                        ?
+                                        <div className={content.length == 0 ? 'otherCss' : ''}>
+                                            {
+                                                (content.length == 0) ?
+                                                    <Alert color="success">No tiene clases finalizadas aún</Alert>
+                                                    :
+                                                    content.map((item) => <TopicItem key={item._id} item={item} />)
+                                            }
+                                        </div>
                                         :
-                                        yourShopping.map((item, index) => <YourShoppingItem key={item._id} item={item} index={index} handleDelivery={handleDelivery} handleReturnDelivery={handleReturnDelivery} />)
-
+                                        <div className={content.length == 0 ? 'otherCss' : ''}>
+                                            {
+                                                (content.length == 0) ?
+                                                    <Alert color="success">No tiene retos finalizados aún</Alert>
+                                                    :
+                                                    content.map((item) => <ChallengueItem key={item._id} item={item} />)
+                                            }
+                                        </div>
                                     }
                                 </div>
                             </div>
-                            <div className="containerComun">
-                                {(user.age < 15)
-                                    ?
-                                    <div className={content.length == 0 ? 'otherCss' : ''}>
-                                        {
-                                            (content.length == 0) ?
-                                                <Alert color="success">No tiene clases finalizadas aún</Alert>
-                                                :
-                                                content.map((item) => <TopicItem key={item._id} item={item} />)
-                                        }
-                                    </div>
-                                    :
-                                    <div className={content.length == 0 ? 'otherCss' : ''}>
-                                        {
-                                            (content.length == 0) ?
-                                                <Alert color="success">No tiene retos finalizados aún</Alert>
-                                                :
-                                                content.map((item) => <ChallengueItem key={item._id} item={item} />)
-                                        }
-                                    </div>
-                                }
-                            </div>
-                        </div>
+                        </>}
                     </Layout>
                 </div>
                 :
