@@ -4,7 +4,7 @@ class Http {
     constructor() {
         this.server = "https://pachaappec.com:443"
         // this.server = "http://localhost:5000"
-        this.timeOut = 7000
+        this.timeOut = 20000
     }
 
     static instance = new Http()

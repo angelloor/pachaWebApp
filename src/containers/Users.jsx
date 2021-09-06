@@ -29,7 +29,7 @@ const Users = ({ cambiarUsers }) => {
     //function
     const getUsers = async () => {
         setLoading(true)
-        Http.instance.get('/webApp/listUsers')
+        Http.instance.post('/webApp/listUsers')
             .then(response => {
                 setLoading(false)
                 cambiarUsers(response.body)

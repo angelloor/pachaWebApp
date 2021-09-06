@@ -55,7 +55,7 @@ const Store = (props) => {
     //funciones
     const getStoreItem = () => {
         setLoading(true)
-        Http.instance.get('/storeItem')
+        Http.instance.post('/storeItem/listStoreItem')
             .then((response) => {
                 setLoading(false)
                 setStoreItem(response.body)
@@ -149,12 +149,15 @@ const Store = (props) => {
 
         const option = sessionStorage.getItem('option')
 
-        if (option != 'actualizar') {
-            if (!selectedFile) {
-                openModal('', 'Tienes que seleccionar una foto para el ítem de la tienda')
-                return
-            }
-        }
+        console.log(inputFile)
+        console.log(selectedFile)
+
+        // if (option != 'actualizar') {
+        //     if (!selectedFile) {
+        //         openModal('', 'Tienes que seleccionar una foto para el ítem de la tienda')
+        //         return
+        //     }
+        // }
 
         if (!name) {
             openModal('', 'Tienes que ingresar el nombre para el ítem de la tienda')
@@ -256,7 +259,7 @@ const Store = (props) => {
                 })
         } else {
             setLoading(true)
-            Http.instance.get(`/storeItem?idStoreItem=${itemSelect}`)
+            Http.instance.post(`/storeItem/listStoreItem?idStoreItem=${itemSelect}`)
                 .then((response) => {
                     sname.value = response.body[0].title
                     sdescription.value = response.body[0].description

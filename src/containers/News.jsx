@@ -57,7 +57,7 @@ const News = (props) => {
     //function
     const getNews = () => {
         setLoading(true)
-        Http.instance.get('/news')
+        Http.instance.post('/news/listNews')
             .then((response) => {
                 setLoading(false)
                 setNews(response.body)
@@ -267,7 +267,7 @@ const News = (props) => {
                 })
         } else {
             setLoading(true)
-            Http.instance.get(`/news?idNews=${itemSelect}`)
+            Http.instance.post(`/news/listNews?idNews=${itemSelect}`)
                 .then((response) => {
                     stitle.value = response.body[0].title
                     sdescription.value = response.body[0].description

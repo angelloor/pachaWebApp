@@ -19,14 +19,12 @@ import YourShoppingItem from '../components/User/YourShoppingItem'
 import Http from '../libs/http'
 import { getDate } from '../utils/otherUtils.js'
 
-
 const DetailUser = ({ cambiarYourShopping, yourShopping }) => {
     const username = sessionStorage.getItem('username')
     let { id } = useParams()
 
     useEffect(() => {
         getData(id)
-        console.log('actualizando');
     }, [loading])
 
     //estado
